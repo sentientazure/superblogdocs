@@ -1,3 +1,4 @@
+# Login Page
 In your `views.py`, replace:
 ```python
 def login_view(request):
@@ -14,29 +15,21 @@ def login_view(request):
     }
     return render(request, "login.html", context)
 ```
-In your `urls.py`, change the following `path()`:
-```python
-path('login/', views.login_view),
-```
-to:
-```python
-path('login/', views.login_view, name="login"),
-```
 In your `login.html`:
 ```django
-<!DOCTYPE html>
-<html >
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="{% url 'login' %}" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit">
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block body %}
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+{% endblock %}
 ```
 Now, if you go to `127.0.0.1:8000/login`, you'll see the login form. If you fill it and submit it won't do anything. Just as we did with registration, we need to receive the form submission in the views.
 
@@ -86,18 +79,23 @@ This line is familiar to you. It'll log the user in with the credentials they en
 ##### `return redirect('article-list')`
 This line will redirect the user to the article list page if they've successfully logged in.
 
-Let's add a button in the article list page to take us to the login page. In your `list.html`, under the "Register" button:
+Let's add a button in the base template to take us to the login page. In your `base.html`, under the "Register" button:
 ```django
 <body>
-    ...
+    <a href="{% url 'register' %}">
+        <button>
+            Register
+        </button>
+    </a>
     <a href="{% url 'login' %}">
         <button>
             Login
         </button>
     </a>
-    ...
+    {% block body %}{% endblock %}
 </body>
 ```
 
-Now you can go to the list page, click on the login button, and be taken to the login page. 
+Now you can click on the login button and be taken to the login page.
+
 Next we're gonna build a button the user can use to logout!

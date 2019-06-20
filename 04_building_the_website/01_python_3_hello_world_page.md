@@ -1,7 +1,5 @@
-Now open the project folder in your favorite text editor or IDE. I'll be using [VS Code](https://code.visualstudio.com/download). I recommend [Sublime Text](https://www.sublimetext.com/3) if you're not familiar with text editors and IDEs in general.
-
-### `urls.py`
-You should see the following already there by default:
+# Hello World Page
+Now, open up the `urls.py` file in your project folder. You should see the following already there by default:
 ```python
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,11 +9,23 @@ Add the following to it:
 ```python
 from articles import views
 urlpatterns = [
-    ...
+    [...]
     path('', views.index),
 ]
 ```
 The first line imports the entire `views` package from the `articles` app. The line with `path` that we added means that if we go to the URL `127.0.0.1:8000`, it will *execute the view function called **index***. Next we will create the view.
+
+Your `urls.py` should look like this:
+```python
+from django.contrib import admin
+from django.urls import path
+from articles import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.index),
+]
+```
 
 ### `views.py`
 You should see the following already existing in the file:

@@ -1,9 +1,10 @@
+# Sharing Is Caring
 Let's put a button at the bottom of the article detail page for sharing this article. A basic sharing functionality, in this case, means to copy the URL of the article so that the user can just paste it elsewhere to share it. So we're gonna have a share button that copies the URL of this article to clipboard, as if the user selected the URL from the URL bar and copied it. This button will copy it for them.
 
-In your `detail.html`:
+In your `detail.html`, at the bottom of the body block:
 ```django
-<body>
-    ...
+{% block body %}
+    [...]
     <button onclick="copyToClipboard('{{ request.build_absolute_uri }}')">
         Share Link
     </button>
@@ -22,10 +23,10 @@ In your `detail.html`:
             $("#poppy").popover("toggle");
         };
     </script>
-</body>
+{% endblock %}
 ```
 
-It's all basic HTMl and JavaScript. The `copyToClipboard()` function is what does the actual copying into clipboard. We have a button that says "Share Link" that if clicked will call this function to copy to clipboard. You can read the JavaScript code to try and understand how it works.
+It's all basic HTML and JavaScript. The `copyToClipboard()` function is what does the actual copying into clipboard. We have a button that says "Share Link" that if clicked will call this function to copy to clipboard. You can read the JavaScript code to try and understand how it works.
 
 ##### `{{ request.build_absolute_uri }}`
 

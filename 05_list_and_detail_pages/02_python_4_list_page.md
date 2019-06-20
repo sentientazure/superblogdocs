@@ -1,3 +1,4 @@
+# List Page
 In your `views.py`, change the `index()` view function to the following:
 ```python
 from .models import Article
@@ -78,9 +79,12 @@ path('', views.index),
 ```
 to...
 ```python
-path('', views.article_list),
+path('articles/', views.article_list, name="article-list"),
 ```
-then, in your `views.py`, change the function name from `index` to `article_list`. Then, in the return line of the view function, change the name of the template from `index.html` to `list.html`.
+
+We just added this new thing, the `name` attribute. For now, you can think of it as a descriptive short name for this URL. We'll use it very soon.
+
+Next, in your `views.py`, change the function name from `index` to `article_list`. Then, in the return line of the view function, change the name of the template from `index.html` to `list.html`.
 
 Your view function should now be:
 ```python
@@ -91,4 +95,4 @@ def article_list(request):
     }
     return render(request, "list.html", context)
 ```
-Lastly, change the template name from `index.html` to `list.html`, in the `templates/` foler.
+Lastly, change the template name from `index.html` to `list.html`, in the `templates/` folder.

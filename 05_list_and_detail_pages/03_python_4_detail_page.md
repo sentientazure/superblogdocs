@@ -1,4 +1,5 @@
-The detail page will be another page. Because of that, we need another `path()` in `urls.py`, another view in `views.py`, and another template in `templates/`.
+# Detail Page
+This will be another page. Because of that, we need another `path()` in `urls.py`, another view in `views.py`, and another template in `templates/`.
 
 But before we jump into the code for this page, let's go back to the shell again and cover some more Queryset Basics...
 
@@ -49,13 +50,26 @@ This knowledge is important to know before going into this next step...
 In your `urls.py` file, at the end of the `urlpatterns` list, add the following line:
 ```python
 urlpatterns = [
-    ...
-    path('articles/<int:article_id>/', views.article_detail),
+    [...]
+    path('articles/<int:article_id>/', views.article_detail, name="article-detail"),
 ]
 ```
 This is the `path()` definition we're using for the detail page. We can define a URL path once, and it can be used for all the article detail pages of the website. Here's how:
 
 The `<int:article_id>` part indicates that this part of the URL can change, we're expecting it to be an integer (`int`), we're calling that number `article_id`. This variable will be passed to the view. Let's create that view!
+
+Your `urls.py` should look like this:
+```python
+from django.contrib import admin
+from django.urls import path
+from articles import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.article_list, name="article-list"),
+    path('articles/<int:article_id>/', views.article_detail, name="article-detail"),
+]
+```
 
 In your `views.py`, let's create a new view function:
 ```python
@@ -71,7 +85,7 @@ Create a template in `templates/` and call it "`detail.html`". Write the followi
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Detail</title>
+    <title>Detail Page</title>
 </head>
 <body>
     <p>{{ article.author }}</p>
@@ -84,3 +98,24 @@ Now the detail page is ready! Remember the article `id`s we printed in the shell
 ![Article Detail Page 1](https://i.imgur.com/kYWlBv6.png)
 
 The first line in this page comes from `<p>{{ article.author }}</p>` in the template code, the second line in the page is `<p>{{ article.title }}</p>`. And the rest comes from `<p>{{ article.body }}</p>`.
+
+By this point, your `views.py` should look like this:
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Article
+
+def article_list(request):
+    articles_list = Article.objects.all()
+    context = {
+        'articles': articles_list
+    }
+    return render(request, "list.html", context)
+
+def article_detail(request, article_id):
+    article_object = Article.objects.get(id=article_id)
+    context = {
+        'article': article_object
+    }
+    return render(request, "detail.html", context)
+```

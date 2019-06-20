@@ -1,3 +1,4 @@
+# Big Picture and the MVC Model
 When we ran the command `python manage.py runserver` we ran our Django project as a server that hosts a website. It's only accessible to us from our local machine, no one else can view this website.
 
 When we opened the browser and typed `127.0.0.1:8000` in the URL bar and hit Enter, we made the browser make an *http request* to the server that hosts a website at the IP address and port `127.0.0.1:8000`.

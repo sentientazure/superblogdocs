@@ -1,3 +1,4 @@
+# Models
 In this application, we will have *articles*. Those articles that users will create and view, need to be stored somewhere. They don't come out of nowhere with a wave of a wand by a flying fairy in the land of unicorns and rainbows. That's what a database is for. The database needs to be structured before we can store anything in it. Meaning we need to tell it what kind of information we're gonna store, and what type each bit of data is. Django, fortunatelly, makes it very easy for us.
 
 What does an article have? When you go to an article, what information do we keep about each article? Well, each article has a title, and the body of the article. We also want to keep track of when it was written, both the date and the time of the day. We also want to know who wrote which article, so the author. For now, we can settle for these data points. Later on we may want to add more information on each article.
@@ -35,4 +36,4 @@ This field, `created`, contains the date and time of when the article is created
 
 ([read more about the different model fields in Django here](https://docs.djangoproject.com/en/2.2/ref/models/fields/))
 
-By default, Django interprets the current date and time according to the UTC timezone. If you live somewhere else in the world, you need to change the `TIME_ZONE` in `settings.py`. Click [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for a list of timezones. Enter the "*TZ database name*" from the list. For example, if you live in Chicago, then you'd write `America/Chicago` in your `TIME_ZONE` variable in `settings.py`.
+By default, Django interprets the current date and time according to the UTC timezone. If you live somewhere else in the world, you need to change the `TIME_ZONE` in `settings.py`, you can find it at the bottom of the file. Click [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for a list of timezones. Enter the "*TZ database name*" from the list. For example, if you live in Chicago, then you'd write `America/Chicago` in your `TIME_ZONE` variable in `settings.py`.

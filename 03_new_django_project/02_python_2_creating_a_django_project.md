@@ -1,8 +1,8 @@
+# Creating a Django Project
 ### Activating the virtual environment
 Before we do anything with the project, we should first *activate* the virtual environment that we just created:
 ```bash
-$ cd superblog_env
-$ source bin/activate
+$ source superblog_env/bin/activate
 ```
 The second command is the one that *activates* the virtual environment.
 
@@ -10,7 +10,7 @@ The second command is the one that *activates* the virtual environment.
 #### Windows
 To activate the virtual environment in Windows, run the following command:
 ```bash
-$ Scripts\activate
+$ superblog_env\Scripts\activate
 ```
 ---
 
@@ -21,14 +21,14 @@ Once you do that, you should see the terminal prompt look like this:
 If you see in between parantheses `(` and `)` the name of the virtual environment you created, that means the virtual environment has been *activated*. What *activated* means is that you're now working inside this virtual environment. Next we'll install Django. Since the virtual environment has been activated, the installation of Django will only be available from this virtual environment.
 ### Installing Django
 ```bash
-(superblog_env)$ pip install django
+(superblog_env)$ pip install django==2.2
 ```
 ### Creating the Django project
-The following commands comes with Django, and it created a Django project for us:
+The following commands comes with Django, and it created a Django project for us, which we will call "superblog":
 ```bash
 (superblog_env)$ django-admin startproject superblog
 ```
-Now let's see what this Django project comes with. Inside the `superblog` folder, that is the Django project, you'll see the following file structure:
+Now let's see what this Django project comes with. Inside the `superblog` folder, which is the Django project, you'll see the following file structure:
 ```
 superblog/
     manage.py
@@ -78,7 +78,7 @@ Let's have a quick runthough of what each of these new files is:
 - `tests.py`: This file is for writing tests for this website.
 - `views.py`: This is where we'll write our views. You'll know what views are later on.
 
-First thing you must remember to do after creating a new Django app, is include it in the `INSTALLED_APPS` list in the `settings.py` file. Open the `settings.py` file and you'll see the following list:
+First thing you must remember to do after creating a new Django app, is include it in the `INSTALLED_APPS` list in the `settings.py` file. Open the `settings.py` file in your favorite text editor or IDE. I'll be using [VS Code](https://code.visualstudio.com/download). I recommend [Sublime Text](https://www.sublimetext.com/3) if you're not familiar with text editors and IDEs in general. You'll see the following list in your `settings.py`:
 ```python
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -92,7 +92,7 @@ INSTALLED_APPS = [
 Include the app we just made at the bottom of the list:
 ```python
 INSTALLED_APPS = [
-    ...
+    [...]
     'articles'
 ]
 ```

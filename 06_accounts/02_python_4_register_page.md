@@ -1,3 +1,4 @@
+# Registration Page
 In the `register_view()` view in your `views.py`:
 ```python
 from .forms import RegisterForm
@@ -11,15 +12,15 @@ def register_view(request):
 ```
 Next, in your `register.html` template:
 ```django
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    {{ form.as_p }}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block body %}
+{{ form.as_p }}
+{% endblock %}
 ```
 Now you can go to `127.0.0.1:8000/register` and you should see the following form appear:
 ![Register Page 1](https://i.imgur.com/93WYAkh.png)
@@ -49,23 +50,27 @@ with:
 What makes this a form that actually submits is the HTML `<form>` tag and the `<input type="submit">` which actually submits the form.
 
 ##### `{% csrf_token %}`
-This bit is a security measure built-in to Django. Basically it prevents hackers from using bots to hack your website through your forms.
+This bit is a security measure built-in to Django. Basically it prevents hackers from using bots to hack your website through your forms. [(Read more about CSRF tokens here.)](https://docs.djangoproject.com/en/2.2/ref/csrf/)
 
 ##### `method="POST"`
 When the user goes to the URL by typing something in the URL bar in the browser and then hitting Enter, that'll make an HTTP request to our server, as explained previously. That request is of type GET. Every HTTP request has a type. This bit of code sets the HTTP request of the form to a POST request. This way, when the user fills the form and submits it, the HTTP request that the submission of the form will make is of type POST.
 
-##### `{% url 'register' %}`
-This is a tag that comes built-in to Django's templating language. It returns a URL path with the `name` that we give it. We gave it the URL name "register", which we will define next. This `{% url ... %}` tag will return the URL path "/register/".
+Your `register.html` should look like this:
+```django
+{% extends "base.html" %}
 
-In your `urls.py`, replace the following line:
-```python
-path('register/', views.register_view),
+{% block title %}
+Register
+{% endblock %}
+
+{% block body %}
+<form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+{% endblock %}
 ```
-with:
-```python
-path('register/', views.register_view, name="register"),
-```
-Because we just gave this `path()` a `name` attribute, we can use that name in the `{% url ... %}` tag above.
 
 Now let's receive this form submission in the view. Change your `register_view()` view in `views.py` to:
 ```python
@@ -113,6 +118,8 @@ But calling it with commit set to false (i.e. `form.save(commit=False)`) will cr
 
 This is important because of how Django handles user passwords. You see, Django doesn't store user passwords. Even the administrator of the website cannot see user passwords. Instead, Django encrypts the password text that the user enters when they register, and that encryption produces a *hash*, which is simply a giant string of random characters. Django stores that hash in the database. Then when the user logs in and enters their password text, Django encrypts that password they entered when attempting to login and compares the resulting hash with the hash previously stored in the database. This way the password is secure, and no one can login to an account without knowing the password.
 
+So before storing the `User` object in the database, we want to change the object's `password` field from the text that the user typed in the form to the hash that Django generates.
+
 If that didn't make sense to you, you don't need to fully understand how that works. You just need to know how to use the Django framework properly. ([read more about `.save(commit=False)`](https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#the-save-method))
 
 ##### `user.set_password(user.password)`
@@ -125,16 +132,7 @@ This line actually saves the user object in the database. It is particularly *th
 When the user registers, you don't want to send them to the login page just to enter their information again. It's better to just log them in once they register. This line logs the user in. It's a function that's built-in to Django. It saves the user’s ID in the session, using Django’s session framework. ([read more about Django's `login()` function here](https://docs.djangoproject.com/en/2.2/topics/auth/default/#django.contrib.auth.login))
 
 ##### `return redirect("article-list")`
-Once the user submits the form to register, we want the user to be taken to the article list page. This line does that. It `redirect`s the user to another page by specifying the URL of the page we want to redirect the user to. Here we're saying `article-list`, which isn't a URL we've defined. However, we can use URL *names*, instead of the actual path that appears on the browser. ([read more about the `redirect(...)` function here](https://docs.djangoproject.com/en/2.2/topics/http/shortcuts/#redirect))
-
-In your `urls.py`, change the following `path()`:
-```python
-path('', views.article_list),
-```
-to:
-```python
-path('', views.article_list, name="article-list"),
-```
+Once the user submits the form to register, we want the user to be taken to the article list page. This line does that. It `redirect`s the user to another page by giving it the URL name. ([read more about the `redirect(...)` function here](https://docs.djangoproject.com/en/2.2/topics/http/shortcuts/#redirect))
 
 Now you can try it out. Go to `127.0.0.1:8000/register` and fill out the registration form. Once you do, you should be taken to the list page.
 
@@ -143,7 +141,7 @@ After, if you go to the admin site, you should be in the login page with the fol
 
 I registered on my website with the username "SentientMshary". Whatever username you entered in the registration form should appear there.
 
-Let's add a button in the article list page that takes us to the registration page. In your `list.html`:
+Let's add a button in the base template that takes us to the registration page. This button, because it's in the base template, will appear in all our pages. In your `base.html`:
 ```django
 <body>
     <a href="{% url 'register' %}">
@@ -151,8 +149,8 @@ Let's add a button in the article list page that takes us to the registration pa
             Register
         </button>
     </a>
-    ...
+    {% block body %}{% endblock %}
 </body>
 ```
 
-Now in your article list page, you can see a button that says "Register", clicking on it will take you to the registration page.
+Now you can see a button that says "Register", clicking on it will take you to the registration page.

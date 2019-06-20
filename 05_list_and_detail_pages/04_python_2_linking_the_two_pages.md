@@ -1,3 +1,4 @@
+# Linking the List and Detail Pages
 Now, let's make it so that a user in the list page can simply *click* on an article title and then be taken to its detail page.
 
 In your `list.html`, change the following line:
@@ -7,12 +8,14 @@ In your `list.html`, change the following line:
 to...
 ```django
 <li>
-    <a href="/articles/{{ article.id }}/">
+    <a href="{% url 'article-detail' article.id %}">
         {{ article.title }}
     </a>
 </li>
 ```
-Now, the title text is wrapped inside an `<a>` tag, which makes it a link. The `href` of the `<a>` is `/articles/<ID>/`. This URL matches with the second `path()` we wrote in our `urls.py`.
+
+##### `{% url 'article-detail' article.id %}`
+This is a tag that comes built-in to Django's templating language. It returns a URL path with the `name` that we give it. We gave it the URL name "article-detail", which we have defined in the previous section as part of the URL path definition. That URL path expects an argument for the article `id`. We give it this `id` after specifying the URL `name` in quotes. This `{% url ... %}` tag will return the URL path "/articles/<ARTICLE_ID>/".
 
 Now, if you go to the list page at `127.0.0.1:8000`, the article titles should now be *links* you can *click*. If you click on one of them, you should be taken to the detail page of that article.
 

@@ -1,3 +1,4 @@
+# Pip and Virtualenv
 ### What is `pip`? Why do we need it?
 pip is a package-management system used to install and manage software packages written in Python. We're using it to install various things, including Django itself. pip is a recursive acronym for "Pip Installs Packages". ([learn more about pip](https://pip.pypa.io/en/stable/))
 ### Installing `virtualenv`

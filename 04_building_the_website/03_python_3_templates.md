@@ -1,3 +1,4 @@
+# Templates
 Create a folder *inside the `articles/` folder* called `templates/`. Make sure you name it ***exactly*** as "templates". That's because Django knows to look for HTML files in the folder called "templates". If you name it something different Django won't see the HTML files inside. Then create a file inside `templates/` called `index.html`. This is the HTML file that will be displayed on the page a little later. Let's write some HTML!
 
 ### HTML
@@ -35,6 +36,7 @@ superblog/
     articles/
         __init__.py
         templates/
+            index.html
         migrations/
         admin.py
         apps.py

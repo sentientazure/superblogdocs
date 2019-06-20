@@ -1,3 +1,4 @@
+# Migrations
 Now that we've written the model class, we need to apply this structure to the database. Django handles most of the leg work associated with handling a database, so you don't need to learn the language of databases (e.g. SQL). To apply the structure to the database, in your Terminal, run the following command (to stop the server from running, hit `CTRL-C`):
 
 ```bash

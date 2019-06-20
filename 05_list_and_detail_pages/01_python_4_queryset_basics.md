@@ -1,4 +1,5 @@
-Our next goal is to display on our website the list of articles for normal users, and allow them to click on an article to see the full article in a separate page. The list page would only display the title of each article, then when the user clicks on an article title, they can see the title, body, and author of the article in its own detail page.
+# Queryset Basics
+Our next goal is to display on our website the list of articles for normal users (who don't have access to the admin page like we, the website developers, do), and allow them to click on an article to see the full article in a separate page. The list page would only display the title of each article, then when the user clicks on an article title, they can see the title, body, and author of the article in its own detail page.
 
 ## Queryset Basics
 In your terminal, run the following command:

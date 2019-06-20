@@ -1,9 +1,12 @@
+# Registration and Login Forms
+These two pages consist essentially of forms. Login page is a form with username and password fields. Registration page is a form with username, password, first name, last name, and email fields.
+
 Let's start by defining two URL `path()`s, one for login and one for register. In your `urls.py`:
 ```python
 urlpatterns = [
-    ...
-    path('register/', views.register_view),
-    path('login/', views.login_view),
+    [...]
+    path('register/', views.register_view, name="register"),
+    path('login/', views.login_view, name="login"),
 ]
 ```
 
@@ -64,5 +67,48 @@ In the `fields` list, we only need to specify the names of the fields as strings
 
 ##### `widgets = {'password': forms.PasswordInput(),}`
 This is how we give the `password` field in this `ModelForm` the `PasswordInput()` widget.
+
+[(Read more about Django forms here.)](https://docs.djangoproject.com/en/2.2/topics/forms/)
+
+Your `urls.py` should look like this:
+```python
+from django.contrib import admin
+from django.urls import path
+from articles import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.article_list, name="article-list"),
+    path('articles/<int:article_id>/', views.article_detail, name="article-detail"),
+    path('register/', views.register_view, name="register"),
+    path('login/', views.login_view, name="login"),
+]
+```
+And your `views.py` should look like this:
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Article
+
+def article_list(request):
+    articles_list = Article.objects.all()
+    context = {
+        'articles': articles_list
+    }
+    return render(request, "list.html", context)
+
+def article_detail(request, article_id):
+    article_object = Article.objects.get(id=article_id)
+    context = {
+        'article': article_object
+    }
+    return render(request, "detail.html", context)
+
+def login_view(request):
+    return render(request, "login.html")
+
+def register_view(request):
+    return render(request, "register.html")
+```
 
 We just finished defining the forms, now let's display them on the website!

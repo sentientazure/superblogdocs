@@ -1,15 +1,17 @@
-Let's give our users the option to delete a draft completely. Let's start with the button. In your `draft_edit.html` template:
+# Draft Delete
+
+Let's give our users the option to delete a draft completely. Let's start with the button. In your `draft_edit.html` template, at the bottom of the body block:
 ```django
-<body>
-    ...
+{% block body %}
+    [...]
     <a href="{% url 'draft-delete' draft.id %}"><button>Delete</button></a>
-</body>
+{% endblock %}
 ```
 
 Now let's create the URL. In your `urls.py`:
 ```python
 urlpatterns = [
-    ...
+    [...]
     path('drafts/<int:article_id>/delete/', views.draft_delete, name="draft-delete"),
 ]
 ```

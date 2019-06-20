@@ -1,3 +1,4 @@
+# Creating a Virtual Environment
 ## Analogy for the virtual environment
 Think of a virtual environment in your computer like a room in a house. The project in the virtual environment like the person in their bedroom. Each person has their own bedroom, so their needs are all met in the privacy of their room. You'd separate the needs of each person in the house by giving them their own bedrooms.
 

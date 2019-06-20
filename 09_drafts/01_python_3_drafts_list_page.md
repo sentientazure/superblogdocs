@@ -1,13 +1,18 @@
+# Drafts!
 Let's now allow our users to write an article and save it as a draft that only they can see, and they can still edit it until they decide to publish it. Once published a draft is no longer editable.
 
 The way the user will be able to save a draft, is by having a button on the article create form that says "Save as draft". Once clicked, that article will then be saved as a draft.
 
 To be able to tell apart, in our database, an article saved as a draft and an article that is submitted and published, we will have a field in the `Article` model called `draft`. This field will be either true or false. If it's true, then we know this article is saved as a draft, if it's false then we know this is a published article.
 
-In your `models.py`:
+Change your model to the following:
 ```python
 class Article(models.Model):
-    ...
+    title = models.CharField(max_length=125)
+    body = models.TextField()
+    author = models.CharField(max_length=125)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
     draft = models.BooleanField(default=False)
     published = models.DateTimeField(null=True)
 ```
@@ -49,17 +54,18 @@ You can see now we have *two* submit buttons. Each of them has a different `valu
 In your `article_create()` view, change the if-statement inside from:
 ```python
 def article_create(request):
-    ...
+    [...]
         if form.is_valid():
             article = form.save(commit=False)
             article.author = request.user
-            ...
-    ...
+            article.save()
+            return redirect("article-list")
+    [...]
 ```
 to:
 ```python
 def article_create(request):
-    ...
+    [...]
         if form.is_valid():
             article = form.save(commit=False)
             article.author = request.user
@@ -67,8 +73,10 @@ def article_create(request):
                 article.draft = True
             else:
                 article.published = now()
-            ...
-    ...
+            
+            article.save()
+            return redirect("article-list")
+    [...]
 ```
 
 ##### `if 'draft' in form.data`
@@ -162,26 +170,28 @@ Now if you go to the article list page, you won't see the draft we just made.
 
 But now... How can I, as the logged in author of a draft, see my drafts? How can I edit and then publish the draft I just made? Well... I, as the developer, have to build that feature. Let's!
 
-Let's create a button in the article list page that takes us to a page that displays all of our drafts. This button will not appear for users who are not logged in, because they're not allowed to write articles, let alone drafts.
+Let's create a button that takes us to a page that displays all of our drafts. This button will not appear for users who are not logged in, because they're not allowed to write articles, let alone drafts.
 
-In your `list.html` template:
+In your `base.html` template, change the following:
 ```django
-...
 {% if request.user.is_authenticated %}
-    ...
-    <a href="{% url 'draft-list' %}">
-        <button>
-            Drafts
-        </button>
-    </a>
+    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+    <a class="nav-item nav-link" href="{% url 'article-create' %}">Write!</a>
 {% else %}
-...
+```
+to:
+```django
+{% if request.user.is_authenticated %}
+    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+    <a class="nav-item nav-link" href="{% url 'draft-list' %}">Drafts</a>
+    <a class="nav-item nav-link" href="{% url 'article-create' %}">Write!</a>
+{% else %}
 ```
 
 Next, let's create the url. In your `urls.py`:
 ```python
 urlpatterns = [
-    ...
+    [...]
     path('drafts/', views.draft_list, name="draft-list"),
 ]
 ```
@@ -193,7 +203,7 @@ def draft_list(request):
     context = {
         'drafts': drafts_list
     }
-    return render(request, "drafts_list.html", context)
+    return render(request, "draft_list.html", context)
 ```
 
 ##### `Article.objects.filter(draft=True, author=request.user)`
@@ -203,26 +213,26 @@ This line will get us the list of articles whose fields are as follows:
 
 This will get us the drafts made by the logged in user. If other users wrote drafts, they won't appear on this page because this query will only retrieve the drafts made by the logged in user. As explained previously, `request.user` is a variable that contains the currently logged in `User` object.
 
-Create a template in your `templates/` folder and call it `drafts_list.html`:
+Create a template in your `templates/` folder and call it `draft_list.html`:
 ```django
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Drafts Page</title>
-</head>
-<body>
-    <a href="{% url 'article-list' %}">
-        <button>
-            Back
-        </button>
-    </a>
-    <ul>
-        {% for draft in drafts %}
-            <li>
-                {{ draft.title }}
-            </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+Drafts Page
+{% endblock %}
+
+{% block body %}
+<a href="{% url 'article-list' %}">
+    <button>
+        Back
+    </button>
+</a>
+<ul>
+    {% for draft in drafts %}
+        <li>
+            {{ draft.title }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
 ```

@@ -1,3 +1,4 @@
+# Admin Site
 In your `admin.py` file, you should see the following:
 ```python
 from django.contrib import admin
@@ -34,6 +35,8 @@ You can see on the far left side it says "0 articles". That's because this page 
 
 Click on the "ADD ARTICLE +" button on the top right corner. You should see the following form:
 ![Admin Add Article](https://i.imgur.com/U3IkJRO.png)
+
+This form is created by Django's Admin site. The input fields are made to match the `Article` model fields. You may notice that the `created` field isn't in the form, because of the `auto_now_add` set to `True`, it knows that it's automatically generated, so it doesn't add it to this form.
 
 Create an article here.
 

@@ -1,3 +1,5 @@
+# Registration Error Messages
+
 For the registration, no changes necessary in the views.
 
 In your `register.html`, replace the following line:
@@ -21,7 +23,7 @@ with:
 {% endfor %}
 ```
 
-What we're doing here is unwrapping the `{{ form.as_p }}`, bit to an extent, so that we can manually display things how we like to. This is necessary here because we want to display the errors of each field underneath the input field directly. But this is useful in general because it gives us more power in how our form behaves.
+What we're doing here is unwrapping the `{{ form.as_p }}` bit to an extent, so that we can manually display things how we like to. This is necessary here because we want to display the errors of each field underneath the input field directly. But this is useful in general because it gives us more power in how our form behaves.
 
 Most of this code was copied directly from Django's official documentation about this topic. [Click here](https://docs.djangoproject.com/en/2.2/topics/forms/#looping-over-the-form-s-fields) to see the original code from the documentation.
 
