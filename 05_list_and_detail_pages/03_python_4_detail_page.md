@@ -80,6 +80,8 @@ def article_detail(request, article_id):
     }
     return render(request, "detail.html", context)
 ```
+The `article_id` function parameter must match the name of the URL parameter `<int:article_id>`.
+
 Create a template in `templates/` and call it "`detail.html`". Write the following inside:
 ```django
 <!DOCTYPE html>

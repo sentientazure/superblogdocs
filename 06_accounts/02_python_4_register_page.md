@@ -141,7 +141,9 @@ After, if you go to the admin site, you should be in the login page with the fol
 
 I registered on my website with the username "SentientMshary". Whatever username you entered in the registration form should appear there.
 
-Let's add a button in the base template that takes us to the registration page. This button, because it's in the base template, will appear in all our pages. In your `base.html`:
+This box says you're "not authorized to access this page." That's because this is the admin page, and only admin user can access it. The registration page we just created creates normal user accounts with limited access.
+
+Let's add a button in the base template that takes us to the registration page, so we can easily navigate the website. This button, because it's in the base template, will appear in all our pages. In your `base.html`:
 ```django
 <body>
     <a href="{% url 'register' %}">

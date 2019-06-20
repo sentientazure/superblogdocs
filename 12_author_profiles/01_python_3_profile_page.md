@@ -25,7 +25,9 @@ class Article(models.Model):
     [...]
 ```
 
-No need to migrate this change because it doesn't change the database structure. We're using this change in the next step. In your `views.py`:
+No need to migrate this change because it doesn't change the database structure. `related_name` is something we can use to get the list of `Article` objects associated with a certain `User` object. You'll see how we'll use it next. (Read more about `related_name` [here](https://docs.djangoproject.com/en/2.2/ref/models/fields/#django.db.models.ForeignKey.related_name)). 
+
+In your `views.py`:
 ```python
 from django.contrib.auth.models import User
 
@@ -80,7 +82,12 @@ Let's make the author's name in the article detail page be a link to the profile
 ```
 to:
 ```django
-<p>Published by: <a href="{% url 'author-profile' article.author.username %}">{{ article.author.first_name }} {{ article.author.last_name }}</a></p>
+<p>
+    Published by:
+    <a href="{% url 'author-profile' article.author.username %}">
+        {{ article.author.first_name }} {{ article.author.last_name }}
+    </a>
+</p>
 ```
 
 Now in the article detail page, the author name is a link to that author's profile page, displaying all the articles they published.

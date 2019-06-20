@@ -172,6 +172,8 @@ But now... How can I, as the logged in author of a draft, see my drafts? How can
 
 Let's create a button that takes us to a page that displays all of our drafts. This button will not appear for users who are not logged in, because they're not allowed to write articles, let alone drafts.
 
+The page this button will take us to is the *drafts list page*. Which is quite similar to the *articles list page*. the main difference will be that the draft's detail page is going to be an update form for that draft.
+
 In your `base.html` template, change the following:
 ```django
 {% if request.user.is_authenticated %}

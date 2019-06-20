@@ -1,9 +1,14 @@
 # Slugs
-If you've noticed in most blog platforms and blogs in general, the URL in the detail page of an article doesn't show you a number that's the `id` of the article. It instead shows you, in the URL, usually the title of the article with hyphens in place of spaces and usually also lowercased. That's called a "*slug*". I know, weird name. Having slugs in the URL also optimizes your website for search engines like Google. Let's create that for our website! Next we're gonna change everywhere in our project where we're using the `id` to uniquely identify an article to use its `slug` to identify it.
+If you've noticed in most blog platforms and blogs in general, the URL in the detail page of an article doesn't show you a number that's the `id` of the article. It instead shows you, in the URL, usually the title of the article with hyphens in place of spaces and usually also lowercased. That's called a "*slug*". I know, weird name. Having slugs in the URL also optimizes your website for search engines like Google. Let's create that for our website! Next, everywhere in our project where we're using the `id` to uniquely identify an article, we'll change it to use the `slug` to identify it instead.
 
 For reasons discussed previous (see "*Automatically assigning article `author`*" section), we need to delete the database. To do that, delete the file `db.sqlite3` in your `superblog/` folder.
 
 This time around, for complicated reasons beyond the scope of this project, we need to also delete the *migrations files*. In your `articles/migrations/` folder you should see files with names starting with "000...". Probably "0001...", "0002...", and "0003..." if you've followed along with us step by step. Delete all those files inside the `articles/migrations/` folder, but make sure *not* to delete the file called "\_\_init\_\_.py".
+
+Since we just deleted the database completely, let's create a superuser again since we might use it at any time:
+```bash
+(superblog)$ python manage.py createsuperuser
+```
 
 Now that that's out of the way, let's create *slugs*!
 
@@ -32,7 +37,9 @@ def create_slug(instance):
     return slug
 ```
 
-Now, this function will receive an article object, `slugify()` its title, and return that. ([read more about Django's `slugify()` function here](https://docs.djangoproject.com/en/2.2/ref/utils/#django.utils.text.slugify).) However, there's an issue here. Article titles aren't unique. So if we have two articles with the exact same titles, their slugs would be identical also. The problem is when we're using slugs to go to the detail page of an article. Which article should we display if multiple articles have the same exact slug?
+Now, this function will receive an article object, `slugify()` its title, and return that. ([read more about Django's `slugify()` function here](https://docs.djangoproject.com/en/2.2/ref/utils/#django.utils.text.slugify).) An example of a slugified article title is: Let's say there's an article with the title "Hello World". The slugified version of that article title is "hello-world". This version of the title is URL- and human-friendly.
+
+However, there's an issue here. Article titles aren't unique. So if we have two articles with the exact same titles, their slugs would be identical also. The problem is when we're using slugs to go to the detail page of an article. Which article should we display if multiple articles have the same exact slug?
 
 Let's fix that problem. Change the function to the following:
 ```python
