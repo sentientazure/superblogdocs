@@ -24,7 +24,7 @@ urlpatterns = [
 ```
 In your `views.py`:
 ```python
-from .forms import ArticleForm
+from .forms import RegisterForm, LoginForm, ArticleForm
 
 def article_create(request):
     form = ArticleForm()

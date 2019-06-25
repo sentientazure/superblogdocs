@@ -97,7 +97,7 @@ Create a template in `templates/` and call it "`detail.html`". Write the followi
 </html>
 ```
 Now the detail page is ready! Remember the article `id`s we printed in the shell previously? Assuming one of those `id`s is 1, go to the URL `127.0.0.1:8000/articles/1`. If you don't have that id, pick one of the `id`s you printed previously and put it in the URL instead of the 1 I put. You should see something like this:
-![Article Detail Page 1](https://i.imgur.com/kYWlBv6.png)
+![Article Detail Page 1](https://i.imgur.com/3UszEgQ.png)
 
 The first line in this page comes from `<p>{{ article.author }}</p>` in the template code, the second line in the page is `<p>{{ article.title }}</p>`. And the rest comes from `<p>{{ article.body }}</p>`.
 
