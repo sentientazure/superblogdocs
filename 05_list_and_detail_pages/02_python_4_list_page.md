@@ -10,7 +10,7 @@ def index(request):
     }
     return render(request, "index.html", context)
 ```
-You can see in the return line we added a new argument to the `render()` call, the context. You can think of the context as a delivery mechanism. It delivers Python data, like objects and lists and dictionaries and so on, to the template (the `.html` file we created that displays the page.) The context is a dictionary variable that has a key "articles", its value is the list of article objects we got from the database. ([read more about the context here]())
+We first had to import the `Article` model. Then you can see in the return line we added a new argument to the `render()` call, the context. You can think of the context as a delivery mechanism. It delivers Python data, like objects and lists and dictionaries and so on, to the template (the `.html` file we created that displays the page.) The context is a dictionary variable that has a key "articles", its value is the list of article objects we got from the database. ([read more about the context here]())
 
 Now, in your `index.html` file, change the `title` from:
 ```html

@@ -6,7 +6,7 @@ def login_view(request):
 ```
 with:
 ```python
-from .forms import LoginForm
+from .forms import RegisterForm, LoginForm
 
 def login_view(request):
     form = LoginForm()
@@ -15,12 +15,12 @@ def login_view(request):
     }
     return render(request, "login.html", context)
 ```
-In your `login.html`:
+Don't forget to import the `LoginForm`. In your `login.html`:
 ```django
 {% extends "base.html" %}
 
 {% block title %}
-Login
+Login Page
 {% endblock %}
 
 {% block body %}
@@ -37,7 +37,7 @@ In your `views.py`, change your `login_view()` to:
 ```python
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from .forms import LoginForm
+from .forms import RegisterForm, LoginForm
 
 def login_view(request):
     form = LoginForm()
@@ -60,7 +60,7 @@ def login_view(request):
 Most of this code is familiar to you, from the registration view. But there's a bit of code there that's new to you. Let's dissect this code!
 
 ##### `username = form.cleaned_data['username']`
-If you recall, this `LoginForm` we're using is *not* a `ModelForm`. It's a basic form. We can get the data the user entered in the form by using the dictionary `cleaned_data` that comes built-in to the form. This dictionary has keys that match the fields in the form that we defined. It has key `username` with value whatever the user entered as the username in the form. Same for password.
+If you recall, this `LoginForm` we're using is *not* a `ModelForm`. It's a basic form. We can get the data the user entered in the form by using the dictionary `cleaned_data` that comes built-in to the form. This dictionary has keys that match the fields in the form that we defined. It has key `username`, its value is whatever the user entered as the username in the form. Same for password.
 
 Here we're taking the username the user entered into the form and storing it in a variable called `username`.
 

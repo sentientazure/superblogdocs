@@ -61,60 +61,62 @@ Author Profile
 {% endblock %}
 
 {% block body %}
-<p>First Name: {{ user.first_name }}</p>
-<p>Last Name: {{ user.last_name }}</p>
-<p>Email: {{ user.email }}</p>
-
-{% for article in articles %}
-    <a href="{% url 'article-detail' article.slug %}">
-        {{ article.title }}
-    </a>
-    <p>{{ article.published|timesince }} ago</p>
-{% endfor %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <h2 class="card-header">{{ user.username }}</h2>
+            <div class="card-body">
+                <p class="card-text">
+                    First Name: {{ user.first_name }}
+                </p>
+                <p class="card-text">
+                    Last Name: {{ user.last_name }}
+                </p>
+                <p class="card-text">
+                    Email: {{ user.email }}
+                </p>
+            </div>
+        </div>
+        {% if not articles %}
+            This user has not published any articles.
+        {% else %}
+            {% for article in articles %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title"><a href="{% url 'article-detail' article.slug %}">{{ article.title }}</a></h2>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Published on {{ article.published }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 ```
 
-This will display the author's first and last names, their email, and their list of published articles ordered by most recent.
+This will display the author's username, first and last names, their email, and their list of published articles ordered by most recent.
 
-Let's make the author's name in the article detail page be a link to the profile page. In your `detail.html`, change the following:
+##### `{% if not articles %}`
+This line checks if the list of `Article`s we get from the context is empty. If it's empty, we'll display a message saying there's no articles.
+
+Let's make the author's name in the article detail and list pages be a link to the profile page. In your `detail.html`, change the following:
 ```django
-<p>Published by: {{ article.author.first_name }} {{ article.author.last_name }}</p>
+by {{ article.author.username }}
 ```
 to:
 ```django
-<p>
-    Published by:
-    <a href="{% url 'author-profile' article.author.username %}">
-        {{ article.author.first_name }} {{ article.author.last_name }}
-    </a>
-</p>
+by <a href="{% url 'author-profile' article.author.username %}">{{ article.author.username }}</a>
+```
+
+In your `list.html`, change the following:
+```django
+Published on {{ article.published }} by {{ article.author.username }}
+```
+to:
+```django
+Published on {{ article.published }} by <a href="{% url 'author-profile' article.author.username %}">{{ article.author.username }}</a>
 ```
 
 Now in the article detail page, the author name is a link to that author's profile page, displaying all the articles they published.
-
-What if the author whose profile we're visiting doesn't have any published articles? Instead of not displaying anything at all, it would be better if the user would see a message that indicates clearly that this author has no published articles. In your `author_profile.html`, change the following:
-```django
-[...]
-{% for article in articles %}
-    <a href="{% url 'article-detail' article.slug %}">
-        {{ article.title }}
-    </a>
-    <p>{{ article.published|timesince }} ago</p>
-{% endfor %}
-[...]
-```
-to:
-```django
-[...]
-{% if not articles %}
-    <p>This user has not published any articles.</p>
-{% else %}
-    {% for article in articles %}
-        <a href="{% url 'article-detail' article.slug %}">
-            {{ article.title }}
-        </a>
-        <p>{{ article.published|timesince }} ago</p>
-    {% endfor %}
-{% endif %}
-[...]
-```

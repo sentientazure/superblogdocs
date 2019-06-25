@@ -66,6 +66,9 @@ The bit with `on_delete=models.CASCADE` is required by Django. It tells Django w
 Now that we've just made changes to our model, we need to migrate to apply those changes to the structure of the database. In the Terminal:
 ```bash
 (superblog_env)$ python manage.py makemigrations
+```
+You should see an output similar to this:
+```bash
 Migrations for 'articles':
   articles/migrations/0002_auto_20190417_1603.py
     - Alter field author on article
@@ -73,6 +76,9 @@ Migrations for 'articles':
 Then run:
 ```bash
 (superblog_env)$ python manage.py migrate
+```
+You should see an output similar to this:
+```bash
 Operations to perform:
   Apply all migrations: admin, articles, auth, contenttypes, sessions
 Running migrations:
@@ -131,47 +137,3 @@ def article_create(request):
 We added the line `article.author = request.user`. The bit that's new to you is the `request.user` part. When the user is logged in, `request.user` always contains the logged in `User` object. In this line, we're taking that `User` object and storing it as the new article's `author` attribute. ([read more about the `request` object here](https://docs.djangoproject.com/en/2.2/ref/request-response/))
 
 Now if you login and write a new article, you'll be able to do so completely without entering an author name. Then, in the list page after submitting the article, you can click on the article to see its detail page, and you'll see the name of the author displaying. It will display the `username` of your account.
-
-Let's make it display the first and last names of the author, instead of the username. It won't be difficult, since we're making an association between the two models, we can access the `User` object's attributes from the `Article` object it's associated with. Here's how...
-
-In your `detail.html`, replace the following line:
-```django
-<p>{{ article.author }}</p>
-```
-with:
-```django
-<p>{{ article.author.first_name }} {{ article.author.last_name }}</p>
-```
-
-Now if you write a new article and go to its detail page, you'll see it now displays the first and last names of your account.
-
-Let me explain how that works:
-
-In the `detail.html` template, we have the `Article` object in a variable named `article`. So if we write `article` we get the `Article` object. This `article` object has the following fields as we have defined the model:
-- title
-- body
-- author (ForeignKey to `User`)
-- created
-
-To access the title, we write `article.title`. To access the body we write `article.body`. What do we access when we write `article.author`? Well, because this is a relationship field, not a `CharField` or a `TextField` for example, we access the `User` object that is stored as this `article`'s `author`. And once we have the `User` object, we can access that `User` object's attributes too!
-
-Django's built-in `User` has many existing fields, including the following:
-- username
-- first_name
-- last_name
-- email
-
-So, since we have in the `detail.html` template the `Article` object as `article`, we can write `article.author.first_name` to get the first name of the author of the article.
-
-### Pop Quiz
-What will appear on the detail page if we replace the following:
-```django
-<p>{{ article.author.first_name }} {{ article.author.last_name }}</p>
-```
-with:
-```django
-<p>{{ article.author.email }}</p>
-```
-?
-
-Answer: After you've guessed by thinking it through mentally, actually replace that line with the new line, go to the detail page and see for yourself. Remember to bring the code back to the way it was before this pop quiz so that your code is consistent with this lesson.

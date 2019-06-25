@@ -38,9 +38,18 @@ These lines register the function `makemarkdown()` as a template filter. We'll b
 Next, in your `detail.html`, change the following:
 ```django
 {% block body %}
-[...]
-<p>{{ article.body }}</p>
-[...]
+<div class="row">
+    <!-- Post Content Column -->
+    <div class="col-lg-12">
+        [...]
+
+        <!-- Post Content -->
+        {{ article.body }}
+
+    </div>
+
+</div>
+<!-- /.row -->
 {% endblock %}
 ```
 to:
@@ -48,9 +57,18 @@ to:
 {% load makemarkdown %}
 
 {% block body %}
-[...]
-<p>{{ article.body|makemarkdown|safe }}</p>
-[...]
+<div class="row">
+    <!-- Post Content Column -->
+    <div class="col-lg-12">
+        [...]
+        
+        <!-- Post Content -->
+        {{ article.body|makemarkdown|safe }}
+
+    </div>
+
+</div>
+<!-- /.row -->
 {% endblock %}
 ```
 
@@ -63,7 +81,7 @@ This allows us to use the template tag called "makemarkdown". That's the functio
 This is what applies Markdown to the body of the article. What the `|` (pronounced "bar") character does here is it takes what's on its left side and sends it as an argument to the function on its right side. So `{{article.body}}` is sent as an argument to our function `makemarkdown`. We're receiving it as `value`. Then what our function `makemarkdown()` returns will be displayed here.
 
 There is one issue with this implementation of Markdown: It leaves us vulnerable to Cross-Site Scripting (XSS) attacks. For example, if someone in their article wrote the following:
-```
+```js
 "><script>
   // Malicious JavaScript code goes here
 </script>
@@ -72,7 +90,7 @@ There is one issue with this implementation of Markdown: It leaves us vulnerable
 our website would simply run the JavaScript code no matter what it was. So anyone could write a script that would run on every user's machine who opens that article. This leaves your users at the mercy of a clever programmer.
 
 Let me show you a harmless example. Create a new article, and in the body write the following:
-```
+```js
 "><script>
   alert(document.cookie);
 </script>

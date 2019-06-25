@@ -15,7 +15,7 @@ to...
 ```
 
 ##### `{% url 'article-detail' article.id %}`
-This is a tag that comes built-in to Django's templating language. It returns a URL path with the `name` that we give it. We gave it the URL name "article-detail", which we have defined in the previous section as part of the URL path definition. That URL path expects an argument for the article `id`. We give it this `id` after specifying the URL `name` in quotes. This `{% url ... %}` tag will return the URL path "/articles/<ARTICLE_ID>/".
+This is a tag that comes built-in to Django's templating language. It returns a URL path with the `name` that we give it. We gave it the URL name "article-detail", which we have defined in the previous section as part of the URL path definition, which matches the URL that belongs to the detail view.. That URL path expects an argument for the article `id`. We give it this `id` after specifying the URL `name` in quotes. This `{% url ... %}` tag will return the URL path "/articles/<ARTICLE_ID>/".
 
 Now, if you go to the list page at `127.0.0.1:8000`, the article titles should now be *links* you can *click*. If you click on one of them, you should be taken to the detail page of that article.
 

@@ -24,7 +24,7 @@ If you see in between parantheses `(` and `)` the name of the virtual environmen
 (superblog_env)$ pip install django==2.2
 ```
 ### Creating the Django project
-The following commands comes with Django, and it created a Django project for us, which we will call "superblog":
+The following command comes built-in with Django. It creates a new Django project for us, which we will call "superblog":
 ```bash
 (superblog_env)$ django-admin startproject superblog
 ```
@@ -62,7 +62,6 @@ superblog/
         wsgi.py
     articles/
         __init__.py
-        templates/
         migrations/
         admin.py
         apps.py

@@ -5,9 +5,8 @@ from django.contrib import admin
 
 # Register your models here.
 ```
-Replace everything with the following:
+Add the following:
 ```python
-from django.contrib import admin
 from .models import Article
 
 admin.site.register(Article)

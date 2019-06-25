@@ -1,22 +1,22 @@
 # About
-It would be nice to know a little about who this author is. Let's create, in the author's profile page, an "About", where they can write a little bit about themselves.
+It would be nice to know a little about who this author is. Let's create, in the author's profile page, a "Description", where they can write a little bit about themselves.
 
-For that to be possible, we need to store in the database the "about" of every author. So we need to create a model for it. In your `models.py`:
+For that to be possible, we need to store in the database the "description" of every author. So we need to create a model for it. In your `models.py`:
 ```python
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    about = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 ```
 
-The `user` field is a One To One field with the `User` model. This is because a user only has one profile and one "about". The `about` field is a `TextField`. We're making it optional so not every user has to have an about. We make it optional by setting `null=True`, and `blank=True`.
+The `user` field is a One To One field with the `User` model. This is because a user only has one profile and one "description". The `description` field is a `TextField`. We're making it optional so not every user has to have a description. We make it optional by setting `null=True`, and `blank=True`.
 
-`null=True` allows a `Profile` object in the database to have an empty `about` field. `blank=True` sets the `about` field as not required for forms.
+`null=True` allows a `Profile` object in the database to have an empty `description` field. `blank=True` sets the `description` field as not required for forms.
 
 Migrate the new model.
 
 In your `admin.py`:
 ```python
-from .models import Profile
+from .models import Article, Profile
 
 admin.site.register(Profile)
 ```
@@ -33,7 +33,7 @@ urlpatterns = [
 
 In your `views.py`:
 ```python
-from .forms import ProfileForm
+from .forms import RegisterForm, LoginForm, ArticleForm, ProfileForm
 
 def profile(request):
     user = request.user
@@ -58,7 +58,7 @@ def profile_edit(request):
 
 Also in your views, update the `register_view()` to be:
 ```python
-from .models import Profile
+from .models import Article, Profile
 
 def register_view(request):
     [...]
@@ -102,15 +102,15 @@ This change is important because it'll automatically create a `Profile` object a
 
 In your `forms.py`:
 ```python
-from .models import Profile
+from .models import Article, Profile
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['about', ]
+        fields = ['description', ]
 ```
 
-Create the two templates: `profile.html` and `profile_edit.html`. In your `profile.html`:
+Create the two templates: `profile.html` and `profile_edit.html`. The way we're gonna style the `profile.html` template will be the same as the way we styled the `author_profile.html` template, with a button to `Edit` the profile:
 ```django
 {% extends "base.html" %}
 
@@ -119,87 +119,252 @@ Profile
 {% endblock %}
 
 {% block body %}
-<a href="{% url 'article-list' %}"><button>Back</button></a>
-<a href="{% url 'profile-edit' %}"><button>Edit</button></a>
-<p>First Name: {{ user.first_name }}</p>
-<p>Last Name: {{ user.last_name }}</p>
-<p>Email: {{ user.email }}</p>
-{% if user.profile.about %}
-    <p>About Me: {{ user.profile.about }}</p>
-{% endif %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <h2 class="card-header">{{ user.username }} <a href="{% url 'profile-edit' %}"><button class="btn btn-outline-success">Edit</button></a></h2>
+            <div class="card-body">
+                <p class="card-text">
+                    First Name: {{ user.first_name }}
+                </p>
+                <p class="card-text">
+                    Last Name: {{ user.last_name }}
+                </p>
+                <p class="card-text">
+                    Email: {{ user.email }}
+                </p>
+                {% if user.profile.description %}
+                    <p class="card-text">
+                        Description: {{ user.profile.description }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+        {% if not articles %}
+            You have not published any articles.
+        {% else %}
+            {% for article in articles %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title"><a href="{% url 'article-detail' article.slug %}">{{ article.title }}</a></h2>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Published on {{ article.published }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 ```
 
-In your `profile_edit.html`:
+##### `{% if user.profile.description %}`
+This page will display the user profile's `description` if he has written a description.
+
+We also changed the message to be displayed if there's no published articles.
+
+The `profile_edit.html` template styles will match the styles used for the draft edit page:
 ```django
 {% extends "base.html" %}
 
 {% block title %}
-Write!
+Profile Edit Page
 {% endblock %}
 
 {% block body %}
-<form action="{% url 'profile-edit' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" class="btn btn-primary">
-</form>
-<a href="{% url 'profile' %}">
-    <button>
-        Cancel
-    </button>
-</a>
+<div class="card my-4">
+    <h5 class="card-header">Edit your description!</h5>
+    <div class="card-body">
+        <form action="{% url 'profile-edit' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_description">Description</label>
+                <textarea class="form-control" id="id_description" placeholder="Write here..." rows="5" name="description">{{ form.description.value }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+```
+
+Now you can edit your profile and write a description. Now we need to display the description in other authors' profiles also, not just the logged in user's profile. This is done in the `author_profile.html` template. Edit the `card-body` div in your `author_profile.html` template to:
+```django
+<div class="card-body">
+    [...]
+    {% if user.profile.description %}
+        <p class="card-text">
+            Description: {{ user.profile.description }}
+        </p>
+    {% endif %}
+</div>
+```
+
+So your `author_profile.html` should look like:
+```django
+{% extends "base.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <h2 class="card-header">{{ user.username }} <a href="{% url 'profile-edit' %}"><button class="btn btn-outline-success">Edit</button></a></h2>
+            <div class="card-body">
+                <p class="card-text">
+                    First Name: {{ user.first_name }}
+                </p>
+                <p class="card-text">
+                    Last Name: {{ user.last_name }}
+                </p>
+                <p class="card-text">
+                    Email: {{ user.email }}
+                </p>
+                {% if user.profile.description %}
+                    <p class="card-text">
+                        Description: {{ user.profile.description }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+        {% if not articles %}
+            You have not published any articles.
+        {% else %}
+            {% for article in articles %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title"><a href="{% url 'article-detail' article.slug %}">{{ article.title }}</a></h2>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Published on {{ article.published }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 ```
 
 Lastly, let's put a button in the navbar that takes you to the profile page. In your `base.html`, change the following:
 ```django
 {% if request.user.is_authenticated %}
-    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-    [...]
-{% else %}
+    <li class="nav-item">
+        <a class="nav-link {{ draft_tab_status }}" href="{% url 'draft-list' %}">
+            Drafts
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'article-create' %}">
+            Write!
+        </a>
+    </li>
+{% endif %}
 ```
 to:
 ```django
 {% if request.user.is_authenticated %}
-    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-    [...]
-{% else %}
+    <li class="nav-item">
+        <a class="nav-link {{ profile_tab_status }}" href="{% url 'profile' %}">
+            Profile
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ draft_tab_status }}" href="{% url 'draft-list' %}">
+            Drafts
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'article-create' %}">
+            Write!
+        </a>
+    </li>
+{% endif %}
 ```
 
 So your resulting `base.html` becomes:
 ```django
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/blog-home.css' %}" rel="stylesheet">
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'article-list' %}">Superblog</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                {% if request.user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                    <a class="nav-item nav-link" href="{% url 'draft-list' %}">Drafts</a>
-                    <a class="nav-item nav-link" href="{% url 'article-create' %}">Write!</a>
-                {% else %}
-                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                {% endif %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {{ home_tab_status }}" href="{% url 'article-list' %}">
+                            Home
+                        </a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ profile_tab_status }}" href="{% url 'profile' %}">
+                                Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ draft_tab_status }}" href="{% url 'draft-list' %}">
+                                Drafts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'article-create' %}">
+                                Write!
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">
+                                Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ login_tab_status }}" href="{% url 'login' %}">
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ register_tab_status }}" href="{% url 'register' %}">
+                                Register
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </nav>
-    {% block body %}{% endblock %}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
 ```

@@ -41,7 +41,7 @@ urlpatterns = [
 ```
 In your `views.py`:
 ```python
-from django.contrib.auth import logout
+from django.contrib.auth import login, authenticate, logout
 
 def logout_view(request):
     logout(request)
@@ -90,6 +90,8 @@ with:
     </a>
 {% endif %}
 ```
+What we did here is if the user is logged in the logout button will be displayed, else (if the user is not logged in) the register and login buttons will appear.
+
 Here we have a full-fledged if-statement within our template. This is possible because of Django's built-in templating language.
 
 ---
@@ -114,7 +116,7 @@ Your `views.py` should be like this:
 ```python
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 
 from .forms import RegisterForm, LoginForm
 from .models import Article

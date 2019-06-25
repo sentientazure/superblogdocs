@@ -158,7 +158,7 @@ def article_create(request):
 ```
 As explained previously, this new line sets the `slug` of the `article` to a slug.
 
-Lastly, in your `views.py`, replace the following:
+Now we're gonna change `id`s to `slug`s everywhere we're referencing the `id` of an `article` or a `draft`. In your `views.py`, replace the following:
 ```python
 def draft_delete(request, article_id):
     article = Article.objects.get(id=article_id)
@@ -185,7 +185,7 @@ In your `draft_edit.html`, change the following two lines:
 [...]
 <form action="{% url 'draft-edit' draft.id %}" method="POST">
 [...]
-<a href="{% url 'draft-delete' draft.id %}"><button>Delete</button></a>
+<a href="{% url 'draft-delete' draft.id %}">
 [...]
 ```
 to:
@@ -193,31 +193,15 @@ to:
 [...]
 <form action="{% url 'draft-edit' draft.slug %}" method="POST">
 [...]
-<a href="{% url 'draft-delete' draft.slug %}"><button>Delete</button></a>
+<a href="{% url 'draft-delete' draft.slug %}">
 [...]
 ```
 
 Lastly, in your `list.html`, change the following:
 ```django
-[...]
-{% for article in articles %}
-    <li>
-        <a href="{% url 'article-detail' article.id %}">
-            {{ article.title }}
-        </a>
-    </li>
-{% endfor %}
-[...]
+<h2 class="card-title"><a href="{% url 'article-detail' article.id %}">{{ article.title }}</a></h2>
 ```
 to:
 ```django
-[...]
-{% for article in articles %}
-    <li>
-        <a href="{% url 'article-detail' article.slug %}">
-            {{ article.title }}
-        </a>
-    </li>
-{% endfor %}
-[...]
+<h2 class="card-title"><a href="{% url 'article-detail' article.slug %}">{{ article.title }}</a></h2>
 ```

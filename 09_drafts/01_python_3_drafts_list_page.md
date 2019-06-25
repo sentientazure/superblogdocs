@@ -31,22 +31,14 @@ After changing the structure of the models, we must migrate:
 (superblog_env)$ python manage.py migrate
 ```
 
-Let's create a button in the `create.html` page. Replace the following form:
+Let's create a button in the `create.html` page. Replace the following submit button:
 ```django
-<form action="{% url 'article-create' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
-</form>
+<button type="submit" class="btn btn-primary">Save as draft</button>
 ```
 with:
 ```django
-<form action="{% url 'article-create' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Publish">
-    <input type="submit" name="draft" value="Save as draft">
-</form>
+<button type="submit" class="btn btn-primary" name="draft">Save as draft</button>
+<button type="submit" class="btn btn-primary">Publish</button>
 ```
 
 You can see now we have *two* submit buttons. Each of them has a different `value` attribute, and that attribute is the text that will be displayed on the button. You can go to the article create page to see. The old "submit" button now says "Publish". The new submit button says "Save as draft". They both also have a `name` attribute. We'll need those in the next step. The views. ([learn more about the `<input>` HTML tag here](https://www.w3schools.com/tags/tag_input.asp))
@@ -174,23 +166,7 @@ Let's create a button that takes us to a page that displays all of our drafts. T
 
 The page this button will take us to is the *drafts list page*. Which is quite similar to the *articles list page*. the main difference will be that the draft's detail page is going to be an update form for that draft.
 
-In your `base.html` template, change the following:
-```django
-{% if request.user.is_authenticated %}
-    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-    <a class="nav-item nav-link" href="{% url 'article-create' %}">Write!</a>
-{% else %}
-```
-to:
-```django
-{% if request.user.is_authenticated %}
-    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-    <a class="nav-item nav-link" href="{% url 'draft-list' %}">Drafts</a>
-    <a class="nav-item nav-link" href="{% url 'article-create' %}">Write!</a>
-{% else %}
-```
-
-Next, let's create the url. In your `urls.py`:
+In your `urls.py`:
 ```python
 urlpatterns = [
     [...]
@@ -198,12 +174,39 @@ urlpatterns = [
 ]
 ```
 
+Next, in your `base.html` template, change the following in the navbar:
+```django
+{% if request.user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'article-create' %}">
+            Write!
+        </a>
+    </li>
+{% endif %}
+```
+to:
+```django
+{% if request.user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link {{ draft_tab_status }}" href="{% url 'draft-list' %}">
+            Drafts
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'article-create' %}">
+            Write!
+        </a>
+    </li>
+{% endif %}
+```
+
 In your `views.py`:
 ```python
 def draft_list(request):
     drafts_list = Article.objects.filter(draft=True, author=request.user)
     context = {
-        'drafts': drafts_list
+        'drafts': drafts_list,
+        'draft_tab_status': "active"
     }
     return render(request, "draft_list.html", context)
 ```
@@ -215,26 +218,39 @@ This line will get us the list of articles whose fields are as follows:
 
 This will get us the drafts made by the logged in user. If other users wrote drafts, they won't appear on this page because this query will only retrieve the drafts made by the logged in user. As explained previously, `request.user` is a variable that contains the currently logged in `User` object.
 
-Create a template in your `templates/` folder and call it `draft_list.html`:
+Create a template in your `templates/` folder and call it `draft_list.html`. For this page, we're gonna copy the styles we used for the article list page with minor modifications:
 ```django
 {% extends "base.html" %}
 
 {% block title %}
-Drafts Page
+Drafts List Page
 {% endblock %}
 
 {% block body %}
-<a href="{% url 'article-list' %}">
-    <button>
-        Back
-    </button>
-</a>
-<ul>
+<div class="row">
+
+  <!-- Blog Entries Column -->
+  <div class="col-12">
+
+    <h1 class="my-4">Super Blog
+      <small>Your Drafts</small>
+    </h1>
+
     {% for draft in drafts %}
-        <li>
-            {{ draft.title }}
-        </li>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">{{ draft.title }}</h2>
+        </div>
+        <div class="card-footer text-muted">
+          Created on {{ draft.created }}
+        </div>
+      </div>
     {% endfor %}
-</ul>
+
+  </div>
+</div>
+<!-- /.row -->
 {% endblock %}
 ```
+
+Instead of the small heading saying "All Articles", this says "Your Drafts". Instead of displaying publish date after "Published on", this displays the date that the draft was created after "Created on".

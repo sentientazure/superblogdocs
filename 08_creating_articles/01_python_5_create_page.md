@@ -39,19 +39,26 @@ def article_create(request):
     return render(request, 'create.html', context)
 ```
 
-Now let's add a button in the base template that takes us to the create page. In your `base.html`:
+Now let's add a button in the base template that takes us to the create page. In your `base.html` under the `Home` button add the `Write!` button:
 ```django
-{% if request.user.is_authenticated %}
-    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-    <a class="nav-item nav-link" href="{% url 'article-create' %}">Write!</a>
-{% else %}
-    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-{% endif %}
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+        <a class="nav-link {{ home_tab_status }}" href="{% url 'article-list' %}">
+            Home
+        </a>
+    </li>
+    {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'article-create' %}">
+                Write!
+            </a>
+        </li>
+    {% endif %}
+</ul>
 ```
 Having the button *inside* the `{% if ... %}` means that only logged in users can write an article. Because the "Write!" button won't appear on the page if they're not logged in.
 
-Create a new HTML file in your `templates/` folder, and call it `create.html`:
+Create a new HTML file in your `templates/` folder, and call it `create.html`. The article create page will consist of a single form that has the title and the body of the article the user is creating. We're gonna style it the same way we styled the login and registration form pages:
 ```django
 {% extends "base.html" %}
 
@@ -60,18 +67,27 @@ Write!
 {% endblock %}
 
 {% block body %}
-<form action="{% url 'article-create' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
-</form>
-<a href="{% url 'article-list' %}">
-    <button>
-        Cancel
-    </button>
-</a>
+<div class="card my-4">
+    <h5 class="card-header">Write!</h5>
+    <div class="card-body">
+        <form action="{% url 'article-create' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_title">Title</label>
+                <input type="text" class="form-control" id="id_title" placeholder="Enter Title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="id_body">Body</label>
+                <textarea class="form-control" id="id_body" placeholder="Write here..." rows="5" name="body"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
 ```
+
+We got the [textarea from Bootstrap](https://getbootstrap.com/docs/4.3/components/forms/#form-controls). The `rows` attribute takes a positive integer value. The larger the number, the larger the text area input field will be when you first open the page. I tried different numbers and felt that 5 was appropriate. You can try changing it and refreshing the page to better understand what it does.
 
 Now, if you're logged in you'll see a button that says "Write!" that takes you to the article create form page, with a cancellation button that takes you to the list page.
 
@@ -98,34 +114,73 @@ urlpatterns = [
 
 Your `base.html` should be like:
 ```django
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/blog-home.css' %}" rel="stylesheet">
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'article-list' %}">Superblog</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                {% if request.user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                    <a class="nav-item nav-link" href="{% url 'article-create' %}">Write!</a>
-                {% else %}
-                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                {% endif %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {{ home_tab_status }}" href="{% url 'article-list' %}">
+                            Home
+                        </a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'article-create' %}">
+                                Write!
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">
+                                Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ login_tab_status }}" href="{% url 'login' %}">
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ register_tab_status }}" href="{% url 'register' %}">
+                                Register
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </nav>
-    {% block body %}{% endblock %}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
 ```

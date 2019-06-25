@@ -26,7 +26,11 @@ Next, change your `list.html` from:
 <body>
     <ul>
         {% for article in articles %}
-            <li>{{ article.title }}</li>
+            <li>
+                <a href="{% url 'article-detail' article.id %}">
+                    {{ article.title }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 </body>
@@ -43,7 +47,11 @@ List Page
 {% block body %}
 <ul>
     {% for article in articles %}
-        <li>{{ article.title }}</li>
+        <li>
+            <a href="{% url 'article-detail' article.id %}">
+                {{ article.title }}
+            </a>
+        </li>
     {% endfor %}
 </ul>
 {% endblock %}

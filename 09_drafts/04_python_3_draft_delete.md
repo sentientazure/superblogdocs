@@ -1,10 +1,19 @@
 # Draft Delete
 
-Let's give our users the option to delete a draft completely. Let's start with the button. In your `draft_edit.html` template, at the bottom of the body block:
+Let's give our users the option to delete a draft completely. Let's start with the button. In your `draft_edit.html` template, add the following delete button at the bottom of the `card-body` div:
 ```django
 {% block body %}
-    [...]
-    <a href="{% url 'draft-delete' draft.id %}"><button>Delete</button></a>
+<div class="card my-4">
+    <h5 class="card-header">Edit your draft!</h5>
+    <div class="card-body">
+        [...]
+        <a href="{% url 'draft-delete' draft.id %}">
+            <button type="submit" class="btn btn-danger mt-1">
+                Delete
+            </button>
+        </a>
+    </div>
+</div>
 {% endblock %}
 ```
 

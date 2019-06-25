@@ -46,12 +46,21 @@ def login_view(request):
 
 Be aware of indentations. In this code, if the form is *invalid* the variable `error_message` will contain the message "Invalid username/password combination. Please try again." Next, we display the message.
 
-In your `login.html`:
+In your `login.html`, above the submit button:
 ```django
-[...]
-{{ form.as_p }}
-<p><strong>{{ error_message }}</strong></p>
-[...]
+{% block body %}
+<div class="card my-4">
+    <h5 class="card-header">Login</h5>
+    <div class="card-body">
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            [...]
+            <p><strong>{{ error_message }}</strong></p>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
 ```
 
 Add that new line under `{{ form.as_p }}`. Now if you try to login using the wrong password or a username that doesn't exist, it will display that message below the input fields.

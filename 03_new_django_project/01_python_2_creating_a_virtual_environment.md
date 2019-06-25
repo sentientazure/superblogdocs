@@ -16,4 +16,4 @@ Now let's create a virtual environment for this project, and set the version of 
 ```bash
 $ virtualenv --python=python3 superblog_env
 ```
-In this command we created a virtual environment (`virtualenv`) then set its Python version to Python 3 (`--python=python3`), and called it *superblog_env*.
+In this command we created a virtual environment (`virtualenv`) then set its Python version to Python 3 (`--python=python3`), and called it *`superblog_env`*.

@@ -1,5 +1,5 @@
 # Templates
-Create a folder *inside the `articles/` folder* called `templates/`. Make sure you name it ***exactly*** as "templates". That's because Django knows to look for HTML files in the folder called "templates". If you name it something different Django won't see the HTML files inside. Then create a file inside `templates/` called `index.html`. This is the HTML file that will be displayed on the page a little later. Let's write some HTML!
+In the starter project you cloned there's a folder called `templates/` that's been already created for you inside the `articles/` app folder. This folder had to be named "templates" exactly because that's where Django looks for HTML files. Create a file inside the `articles/templates/` folder called `index.html`. This is the HTML file that will be displayed on the page a little later. Let's write some HTML!
 
 ### HTML
 In your `index.html`:
@@ -36,6 +36,8 @@ superblog/
     articles/
         __init__.py
         templates/
+            blog_home.html
+            blog_post.html
             index.html
         migrations/
         admin.py

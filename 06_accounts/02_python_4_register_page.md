@@ -10,7 +10,7 @@ def register_view(request):
     }
     return render(request, "register.html", context)
 ```
-Next, in your `register.html` template:
+Don't forget to import the `RegisterForm`. Next, in your `register.html` template:
 ```django
 {% extends "base.html" %}
 
@@ -53,14 +53,14 @@ What makes this a form that actually submits is the HTML `<form>` tag and the `<
 This bit is a security measure built-in to Django. Basically it prevents hackers from using bots to hack your website through your forms. [(Read more about CSRF tokens here.)](https://docs.djangoproject.com/en/2.2/ref/csrf/)
 
 ##### `method="POST"`
-When the user goes to the URL by typing something in the URL bar in the browser and then hitting Enter, that'll make an HTTP request to our server, as explained previously. That request is of type GET. Every HTTP request has a type. This bit of code sets the HTTP request of the form to a POST request. This way, when the user fills the form and submits it, the HTTP request that the submission of the form will make is of type POST.
+When the user goes to the URL by typing something in the URL bar in the browser and then hitting Enter, that'll make an HTTP request to our server, as explained previously. That request is of type GET. Every HTTP request has a type. This bit of code sets the HTTP request of the form to a POST request. This way, when the user fills the form and submits it, the HTTP request that the submission of the form will make is of type POST. This is because the user is POST-ing the registration data.
 
 Your `register.html` should look like this:
 ```django
 {% extends "base.html" %}
 
 {% block title %}
-Register
+Register Page
 {% endblock %}
 
 {% block body %}

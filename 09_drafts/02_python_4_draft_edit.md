@@ -26,28 +26,41 @@ When the user goes into the draft edit page, we want the draft `title` and `body
 
 That's exactly what this line does. The `instance=article` bit is what fills the form with the `title` and `body` of the `article` object. Django can easily do this because the form, `ArticleForm` is a `ModelForm` associated with the `Article` model. So the fields match.
 
-Create `draft_edit.html` in your `templates/` folder:
+Create `draft_edit.html` in your `templates/` folder. For this page, we'll copy the styles for the article create page with minor modifications:
 ```django
 {% extends "base.html" %}
 
 {% block title %}
-Write!
+Draft Edit Page
 {% endblock %}
 
 {% block body %}
-<form action="{% url 'draft-edit' draft.id %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" name="publish" value="Publish">
-    <input type="submit" name="draft" value="Save as draft">
-</form>
-<a href="{% url 'draft-list' %}">
-    <button>
-        Cancel
-    </button>
-</a>
+<div class="card my-4">
+    <h5 class="card-header">Edit your draft!</h5>
+    <div class="card-body">
+        <form action="{% url 'draft-edit' draft.id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_title">Title</label>
+                <input type="text" class="form-control" id="id_title" placeholder="Enter Title" name="title" value="{{ form.title.value }}">
+            </div>
+            <div class="form-group">
+                <label for="id_body">Body</label>
+                <textarea class="form-control" id="id_body" placeholder="Write here..." rows="5" name="body">{{ form.body.value }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" name="draft">Save as draft</button>
+            <button type="submit" class="btn btn-primary">Publish</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
 ```
+
+##### `value="{{ form.title.value }}"`
+This part of the title input field is what sets the draft's old title in the title input field so that the user can see what they wrote before in this draft.
+
+##### `<textarea [...]>{{ form.body.value }}</textarea>`
+The way to put the existing value for the `<textarea>` is by putting the old value between the opening and closing tags. Unlike the `<input>` element which takes the value as an attribute called `value`.
 
 In your `draft_list.html` template, change the following:
 ```django
@@ -80,7 +93,7 @@ def draft_edit(request, article_id):
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
             article = form.save()
-            if 'publish' in form.data:
+            if 'draft' not in form.data:
                 article.draft = False
                 article.published = now()
                 article.save()
@@ -96,7 +109,7 @@ def draft_edit(request, article_id):
 ##### `form = ArticleForm(request.POST, instance=article)`
 This line will, instead of creating a new `Article` object, update the existing `Article` object sent to it in the `instance=article` bit.
 
-##### `if 'publish' in form.data:`
+##### `if 'draft' not in form.data:`
 If this condition is true, then the `Article` object's `draft` boolean field will be set to `False`, meaning that it's now published. If this condition is false, the article's `draft` will remain `False`.
 
 This condition will be true if the user clicks the "Publish" button from the page, as discussed and explained previously.
