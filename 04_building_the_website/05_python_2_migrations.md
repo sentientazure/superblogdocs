@@ -1,22 +1,29 @@
 # Migrations
+
 Now that we've written the model class, we need to apply this structure to the database. Django handles most of the leg work associated with handling a database, so you don't need to learn the language of databases (e.g. SQL). To apply the structure to the database, in your Terminal, run the following command (to stop the server from running, hit `CTRL-C`):
 
 ```bash
 (superblog_env)$ python manage.py makemigrations
 ```
+
 You should see this:
+
 ```bash
 Migrations for 'articles':
   articles/migrations/0001_initial.py
     - Create model Article
 ```
-That command creates the *migrations files*. You don't need to fully understand this part. But these files (you can find them in `articles/migrations/`) contain instructions for Django to modify the structure of the database.
+
+That command creates the _migrations files_. You don't need to fully understand this part. But these files (you can find them in `articles/migrations/`) contain instructions for Django to modify the structure of the database.
 
 Run the following command to apply the structure to the database:
+
 ```bash
 (superblog_env)$ python manage.py migrate
 ```
+
 If done correctly, you should see:
+
 ```bash
 Operations to perform:
   Apply all migrations: admin, articles, auth, contenttypes, sessions
@@ -40,6 +47,7 @@ Running migrations:
   Applying auth.0011_update_proxy_permissions... OK
   Applying sessions.0001_initial... OK
 ```
+
 Now our database is fully prepared to store articles! Woohoo!!
 
 ([read more about migrations in Django here](https://docs.djangoproject.com/en/2.2/topics/migrations/))

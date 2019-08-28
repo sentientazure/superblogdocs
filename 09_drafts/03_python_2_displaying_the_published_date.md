@@ -3,6 +3,7 @@
 Let's display, in the detail page, the published date and time of an article.
 
 In your `detail.html`, replace the following:
+
 ```django
 <div class="row">
     <!-- Post Content Column -->
@@ -22,7 +23,9 @@ In your `detail.html`, replace the following:
 </div>
 <!-- /.row -->
 ```
+
 with:
+
 ```django
 <div class="row">
     <!-- Post Content Column -->
@@ -49,9 +52,13 @@ with:
 Voila! Now the published date and time display in the detail page. If you want, you can display the time since the article is published. For example, it would say "2 minutes ago" if you published the article two minutes ago.
 
 To do that, replace the line:
+
 ```django
 {{ article.published }}
 ```
+
 with:
+
 ```django
 {{ article.published|timesince }} ago
+```

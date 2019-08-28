@@ -1,7 +1,9 @@
 # Draft Edit
+
 Let's create a page where the user can edit a draft!
 
 In your `urls.py`:
+
 ```python
 urlpatterns = [
     [...]
@@ -10,6 +12,7 @@ urlpatterns = [
 ```
 
 In your `views.py`:
+
 ```python
 def draft_edit(request, article_id):
     article = Article.objects.get(id=article_id)
@@ -22,11 +25,13 @@ def draft_edit(request, article_id):
 ```
 
 ##### `form = ArticleForm(instance=article)`
+
 When the user goes into the draft edit page, we want the draft `title` and `body` to already be there in the form, so that the user doesn't have to re-write everything every time they want to edit the draft.
 
 That's exactly what this line does. The `instance=article` bit is what fills the form with the `title` and `body` of the `article` object. Django can easily do this because the form, `ArticleForm` is a `ModelForm` associated with the `Article` model. So the fields match.
 
 Create `draft_edit.html` in your `templates/` folder. For this page, we'll copy the styles for the article create page with minor modifications:
+
 ```django
 {% extends "base.html" %}
 
@@ -57,18 +62,23 @@ Draft Edit Page
 ```
 
 ##### `value="{{ form.title.value }}"`
+
 This part of the title input field is what sets the draft's old title in the title input field so that the user can see what they wrote before in this draft.
 
 ##### `<textarea [...]>{{ form.body.value }}</textarea>`
+
 The way to put the existing value for the `<textarea>` is by putting the old value between the opening and closing tags. Unlike the `<input>` element which takes the value as an attribute called `value`.
 
 In your `draft_list.html` template, change the following:
+
 ```django
 <li>
     {{ draft.title }}
 </li>
 ```
+
 to:
+
 ```django
 <li>
     <a href="{% url 'draft-edit' draft.id %}">
@@ -78,11 +88,13 @@ to:
 ```
 
 ##### `<a href="{% url 'draft-edit' draft.id %}">`
+
 We want to make it such that if the user clicks on the title of the draft they're taken to the draft edit page.
 
 Now we can go to the draft edit page, let's handle submitting the edit form.
 
 Change your `draft_edit()` view to:
+
 ```python
 from django.utils.timezone import now
 
@@ -107,15 +119,19 @@ def draft_edit(request, article_id):
 ```
 
 ##### `form = ArticleForm(request.POST, instance=article)`
+
 This line will, instead of creating a new `Article` object, update the existing `Article` object sent to it in the `instance=article` bit.
 
 ##### `if 'draft' not in form.data:`
+
 If this condition is true, then the `Article` object's `draft` boolean field will be set to `False`, meaning that it's now published. If this condition is false, the article's `draft` will remain `False`.
 
 This condition will be true if the user clicks the "Publish" button from the page, as discussed and explained previously.
 
 ##### `article.published = now()`
+
 In this line, the function call `now()`, from Django's built-in `timezone` module, gets us the current date and time in a format that's compatible with Django's `DateTimeField`. ([learn more about Django's `DateTimeField` here](https://docs.djangoproject.com/en/2.2/ref/models/fields/#datetimefield))
 
 ##### `return redirect("article-detail", article_id=article.id)`
+
 In this line we're redirecting the user to the article detail page if they chose to publish their article. The `article-detail` URL receives a URL parameter called `article_id`. To pass it a value when using the `redirect(...)` function call, we send the URL parameter as an argument to the function call, as we did here.

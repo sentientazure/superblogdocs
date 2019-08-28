@@ -1,11 +1,15 @@
 # Linking the List and Detail Pages
-Now, let's make it so that a user in the list page can simply *click* on an article title and then be taken to its detail page.
+
+Now, let's make it so that a user in the list page can simply _click_ on an article title and then be taken to its detail page.
 
 In your `list.html`, change the following line:
+
 ```django
 <li>{{ article.title }}</li>
 ```
+
 to...
+
 ```django
 <li>
     <a href="{% url 'article-detail' article.id %}">
@@ -15,10 +19,11 @@ to...
 ```
 
 ##### `{% url 'article-detail' article.id %}`
+
 This is a tag that comes built-in to Django's templating language. It returns a URL path with the `name` that we give it. We gave it the URL name "article-detail", which we have defined in the previous section as part of the URL path definition, which matches the URL that belongs to the detail view.. That URL path expects an argument for the article `id`. We give it this `id` after specifying the URL `name` in quotes. This `{% url ... %}` tag will return the URL path "/articles/<ARTICLE_ID>/".
 
-Now, if you go to the list page at `127.0.0.1:8000`, the article titles should now be *links* you can *click*. If you click on one of them, you should be taken to the detail page of that article.
+Now, if you go to the list page at `127.0.0.1:8000`, the article titles should now be _links_ you can _click_. If you click on one of them, you should be taken to the detail page of that article.
 
-Notice that whenever you click on an article title in the list page, the URL you're taken to will have a different number with each article. And they all take you to different pages. However, all those different pages have been programmed *only once*. The second URL we defined (`'articles/<int:article_id>/'`) is dynamic. The second view, the `article_detail()` view, is also dynamic. Meaning that they can display different pages depending on the `id` they receive.
+Notice that whenever you click on an article title in the list page, the URL you're taken to will have a different number with each article. And they all take you to different pages. However, all those different pages have been programmed _only once_. The second URL we defined (`'articles/<int:article_id>/'`) is dynamic. The second view, the `article_detail()` view, is also dynamic. Meaning that they can display different pages depending on the `id` they receive.
 
-The next goal is to allow *users* to create their own articles. But before we can do that, we need to allow users to register and login to their own accounts on our website.
+The next goal is to allow _users_ to create their own articles. But before we can do that, we need to allow users to register and login to their own accounts on our website.

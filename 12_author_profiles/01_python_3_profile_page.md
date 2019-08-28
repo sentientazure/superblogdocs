@@ -1,8 +1,9 @@
 # Profile Page
 
-Let's build a page where you can see all the articles that an author has published. That'll be the author's profile page. Anywhere an author's name is displayed, we'll make it into a *link* that if clicked will take the user to that author's profile page, displaying all the published articles written by that author.
+Let's build a page where you can see all the articles that an author has published. That'll be the author's profile page. Anywhere an author's name is displayed, we'll make it into a _link_ that if clicked will take the user to that author's profile page, displaying all the published articles written by that author.
 
 To start, let's write the URL, the view, then the template. In your `urls.py`:
+
 ```python
 urlpatterns = [
     [...]
@@ -11,13 +12,16 @@ urlpatterns = [
 ```
 
 Let's make a quick change in the models, change the following line:
+
 ```python
 class Article(models.Model):
     [...]
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     [...]
 ```
+
 to:
+
 ```python
 class Article(models.Model):
     [...]
@@ -25,9 +29,10 @@ class Article(models.Model):
     [...]
 ```
 
-No need to migrate this change because it doesn't change the database structure. `related_name` is something we can use to get the list of `Article` objects associated with a certain `User` object. You'll see how we'll use it next. (Read more about `related_name` [here](https://docs.djangoproject.com/en/2.2/ref/models/fields/#django.db.models.ForeignKey.related_name)). 
+No need to migrate this change because it doesn't change the database structure. `related_name` is something we can use to get the list of `Article` objects associated with a certain `User` object. You'll see how we'll use it next. (Read more about `related_name` [here](https://docs.djangoproject.com/en/2.2/ref/models/fields/#django.db.models.ForeignKey.related_name)).
 
 In your `views.py`:
+
 ```python
 from django.contrib.auth.models import User
 
@@ -42,17 +47,21 @@ def author_profile(request, username):
 ```
 
 ##### `user = User.objects.get(username=username)`
+
 In this line we're getting the `User` object with the `username` we're receiving from the URL.
 
 ##### `user.articles.filter(draft=False)`
-We're filtering the set of `Article`s whose `author` is `user`, with `draft` set to `False`. Which means give me the *published* articles written by this `user`.
+
+We're filtering the set of `Article`s whose `author` is `user`, with `draft` set to `False`. Which means give me the _published_ articles written by this `user`.
 
 We're using the `related_name` we just added in the models here in this line as the `articles` in `user.articles`. Writing `user.articles` is the same as writing `Article.objects.filter(author=user)`.
 
 ##### `.order_by("-published")`
+
 This will order the set of articles by their `published` field value. Which means it'll give us the list with the most recent articles first. Removing the "`-`" will reverse the order.
 
 Create a new template `author_profile.html`:
+
 ```django
 {% extends "base.html" %}
 
@@ -99,22 +108,29 @@ Author Profile
 This will display the author's username, first and last names, their email, and their list of published articles ordered by most recent.
 
 ##### `{% if not articles %}`
+
 This line checks if the list of `Article`s we get from the context is empty. If it's empty, we'll display a message saying there's no articles.
 
 Let's make the author's name in the article detail and list pages be a link to the profile page. In your `detail.html`, change the following:
+
 ```django
 by {{ article.author.username }}
 ```
+
 to:
+
 ```django
 by <a href="{% url 'author-profile' article.author.username %}">{{ article.author.username }}</a>
 ```
 
 In your `list.html`, change the following:
+
 ```django
 Published on {{ article.published }} by {{ article.author.username }}
 ```
+
 to:
+
 ```django
 Published on {{ article.published }} by <a href="{% url 'author-profile' article.author.username %}">{{ article.author.username }}</a>
 ```

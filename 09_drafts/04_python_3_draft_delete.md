@@ -1,6 +1,7 @@
 # Draft Delete
 
 Let's give our users the option to delete a draft completely. Let's start with the button. In your `draft_edit.html` template, add the following delete button at the bottom of the `card-body` div:
+
 ```django
 {% block body %}
 <div class="card my-4">
@@ -18,6 +19,7 @@ Let's give our users the option to delete a draft completely. Let's start with t
 ```
 
 Now let's create the URL. In your `urls.py`:
+
 ```python
 urlpatterns = [
     [...]
@@ -26,6 +28,7 @@ urlpatterns = [
 ```
 
 In your `views.py`:
+
 ```python
 def draft_delete(request, article_id):
     article = Article.objects.get(id=article_id)

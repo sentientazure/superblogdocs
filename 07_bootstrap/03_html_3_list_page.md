@@ -1,6 +1,7 @@
 # Styling the List Page!
 
 For styling the list page, open up the `blog_home.html` template. In it, you'll find the following:
+
 ```django
 <div class="row">
     <!-- Blog Entries Column -->
@@ -10,13 +11,17 @@ For styling the list page, open up the `blog_home.html` template. In it, you'll 
 </div>
 <!-- /.row -->
 ```
+
 Copy those `<div>`s, but delete everything inside of the inner `<div>` except the following Page Heading:
+
 ```django
 <h1 class="my-4">Page Heading
     <small>Secondary Text</small>
 </h1>
 ```
+
 and one of the blog posts:
+
 ```django
 <!-- Blog Post -->
 <div class="card mb-4">
@@ -34,6 +39,7 @@ and one of the blog posts:
 ```
 
 In your `list.html`, replace of the following:
+
 ```django
 <ul>
     {% for article in articles %}
@@ -45,7 +51,9 @@ In your `list.html`, replace of the following:
     {% endfor %}
 </ul>
 ```
+
 with:
+
 ```django
 <div class="row">
 
@@ -84,6 +92,7 @@ You sure?
 Okay...
 
 Change the block of code that we just pasted into the list page to the following:
+
 ```django
 <div class="row">
 
@@ -110,15 +119,18 @@ Change the block of code that we just pasted into the list page to the following
 <!-- /.row -->
 ```
 
-Now if you refresh the list page, you'll see it displays the list of articles and they look much neater. Look at the code above and try to understand exactly why we put the for-loop where we put it. Just ask yourself this: *Which part of the page, which part of the code, do we need to repeat?*
+Now if you refresh the list page, you'll see it displays the list of articles and they look much neater. Look at the code above and try to understand exactly why we put the for-loop where we put it. Just ask yourself this: _Which part of the page, which part of the code, do we need to repeat?_
 
 Now the original block of code displays a single article displays static text. But when we're looping and displaying the different titles of each article, we want to remove the existing static/example text with variables.
 
 So you can see above, we changed the following:
+
 ```django
 <h2 class="card-title">Post Title</h2>
 ```
+
 to:
+
 ```django
 <h2 class="card-title"><a href="{% url 'author-profile' article.author.username %}">{{ article.title }}</a></h2>
 ```
@@ -130,11 +142,14 @@ We did the same for the article author name and the article published date.
 There's a one minor change you might not notice immediately... But for you to understand the rest of this section, you need to have a decent grasp of Bootstrap's magic: The Grid System. Please [click here](https://getbootstrap.com/docs/4.3/layout/grid/) and read a bit about it, until you have a decent grasp of what it is, then come back and continue from here.
 
 The minor change is that we replaced the following code:
+
 ```django
 <!-- Blog Entries Column -->
 <div class="col-md-8">
 ```
+
 with:
+
 ```django
 <!-- Blog Entries Column -->
 <div class="col-12">
@@ -143,10 +158,13 @@ with:
 This is because we want the width of the blog article to take up the full width of the page. Now if you refresh the list page, you'll see it takes the whole width of the screen. It does look a bit awkward. That's because we're not finished prettifying everything!
 
 You might've figured out by now that the Grid System in Bootstrap works only within a "`container`" `<div>`. Let's add that! In your `base.html` template, change the following:
+
 ```django
 {% block body %}{% endblock %}
 ```
+
 to:
+
 ```django
 <div class="container">
     {% block body %}{% endblock %}

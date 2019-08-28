@@ -3,6 +3,7 @@
 For styling the registration page, take a look at [Bootstrap's form example](https://getbootstrap.com/docs/4.3/components/forms/#overview). We'll be editing and using that in this section.
 
 For example, let's take this code:
+
 ```django
 <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
@@ -12,6 +13,7 @@ For example, let's take this code:
 ```
 
 This displays a nice-looking email input field. We wanna reuse that for the registration form, but edit it to fit our needs. For example, we'll redo the attribute values and remove the `<small>` element. Our email input field will be:
+
 ```django
 <div class="form-group">
     <label for="id_email">Email Address</label>
@@ -22,6 +24,7 @@ This displays a nice-looking email input field. We wanna reuse that for the regi
 We'll use the `<small>` element for the help text for the username field.
 
 Repeating the same editing process for the other fields, our form becomes:
+
 ```django
 <form action="{% url 'register' %}" method="POST">
     {%  csrf_token %}
@@ -51,9 +54,11 @@ Repeating the same editing process for the other fields, our form becomes:
 ```
 
 ##### `<small id="usernameHelp" class="form-text text-muted">{{ form.username.help_text }}</small>`
+
 This line displays the help text for the username field of the form. The help text itself is written by the Django developers as part of the built-in `User` model. We're able to use it here because our registration form is a `ModelForm` associated with the `User` model. We're putting it in the `<small>` tag because it'll look appopriate when you see it in the page as small faded-colored text.
 
 Open up the `blog_post.html` template, scroll down to "`<!-- Comments Form -->`". We're gonna edit and use that form for the registration page. The comments form looks like this from the `blog_post.html` template:
+
 ```django
 <div class="card my-4">
     <h5 class="card-header">Leave a Comment:</h5>
@@ -69,6 +74,7 @@ Open up the `blog_post.html` template, scroll down to "`<!-- Comments Form -->`"
 ```
 
 Copy that, remove the text area and change the opening `<form>` tag to fit our needs. Replace the old body block with this new body block. Your resulting body block in your `register.html` should be like:
+
 ```django
 {% block body %}
 <div class="card my-4">
@@ -103,4 +109,3 @@ Copy that, remove the text area and change the opening `<form>` tag to fit our n
 </div>
 {% endblock %}
 ```
-

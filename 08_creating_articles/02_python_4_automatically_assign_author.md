@@ -7,16 +7,21 @@ Firstly, we need to delete all the existing articles because we are altering the
 Deleting the existing articles is necessary because of the changes we're doing next. In the real world, when your website is in production and the data is very critical and important to keep and not delete on a whim, you'll learn ways to avoid purging your database as we're doing now. But for now, for the purposes of keeping you focused on what matters and getting the fundamentals across, and because our website is in development and we don't have any critical data, we're gonna delete all the (few) existing articles we've created so far. ([read more about migrations here](https://docs.djangoproject.com/en/2.2/topics/migrations/#more-advanced-migrations))
 
 In the Terminal, run the shell:
+
 ```bash
 (superblog_env)$ python manage.py shell
 ```
+
 Then run the following to delete all existing `Article`s:
+
 ```bash
 >>> from articles.models import Article
 >>> for article in Article.objects.all():
 ...     article.delete()
 ```
+
 You should see an output like:
+
 ```bash
 (1, {'articles.Article': 1})
 (1, {'articles.Article': 1})
@@ -28,10 +33,13 @@ You should see an output like:
 Now we can make the changes to the model. If we had attempted to make changes to the model before deleting existing articles, Django will complain and tell you that the existing articles have data that don't match the structure you're changing to. So it won't allow it.
 
 In the `Article` model we defined in our `models.py`, the `author` field is defined as:
+
 ```python
 author = models.CharField(max_length=125)
 ```
+
 This means that the author of an article is limited to a name as a string only. There's a far better way to define the `author` field. Change the `Article` model to the following:
+
 ```python
 from django.db import models
 from django.contrib.auth.models import User
@@ -43,12 +51,15 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 ```
+
 Let's dissect that new line...
 
 ##### `author = models.ForeignKey(User, on_delete=models.CASCADE)`
+
 Here, we're not defining the `author` as a string only. We're defining the `author` as a relationship between the two models, `Article` and `User` (built-in).
 
 In Django, there's three model relationships:
+
 - One To One: i.e. One user can have only and exactly one article.
 - One To Many: i.e. One user can have many articles, and each article belongs to a single user.
 - Many To Many: i.e. One user can have many articles, and each article can belong to multiple users.
@@ -64,20 +75,27 @@ The bit with `on_delete=models.CASCADE` is required by Django. It tells Django w
 [Click here](https://docs.djangoproject.com/en/2.1/ref/models/fields/#django.db.models.ForeignKey.on_delete) to see other deletion options that come with Django.
 
 Now that we've just made changes to our model, we need to migrate to apply those changes to the structure of the database. In the Terminal:
+
 ```bash
 (superblog_env)$ python manage.py makemigrations
 ```
+
 You should see an output similar to this:
+
 ```bash
 Migrations for 'articles':
   articles/migrations/0002_auto_20190417_1603.py
     - Alter field author on article
 ```
+
 Then run:
+
 ```bash
 (superblog_env)$ python manage.py migrate
 ```
+
 You should see an output similar to this:
+
 ```bash
 Operations to perform:
   Apply all migrations: admin, articles, auth, contenttypes, sessions
@@ -86,10 +104,13 @@ Running migrations:
 ```
 
 In the `ArticleForm` class in your `forms.py`, change the `fields` list from:
+
 ```python
 fields = ["title", "body", "author"]
 ```
+
 to:
+
 ```python
 fields = ["title", "body"]
 ```
@@ -97,6 +118,7 @@ fields = ["title", "body"]
 Now the article create form doesn't display an input field for the author. Next, we need to provide the value for `author` to the article when it's being created.
 
 In your `views.py`, change the following view:
+
 ```python
 def article_create(request):
     [...]
@@ -105,7 +127,9 @@ def article_create(request):
             return redirect("article-list")
     [...]
 ```
+
 to:
+
 ```python
 def article_create(request):
     [...]
@@ -118,6 +142,7 @@ def article_create(request):
 ```
 
 Your create view should look like this:
+
 ```python
 def article_create(request):
     form = ArticleForm()

@@ -1,7 +1,9 @@
 # About
+
 It would be nice to know a little about who this author is. Let's create, in the author's profile page, a "Description", where they can write a little bit about themselves.
 
 For that to be possible, we need to store in the database the "description" of every author. So we need to create a model for it. In your `models.py`:
+
 ```python
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -15,6 +17,7 @@ The `user` field is a One To One field with the `User` model. This is because a 
 Migrate the new model.
 
 In your `admin.py`:
+
 ```python
 from .models import Article, Profile
 
@@ -22,6 +25,7 @@ admin.site.register(Profile)
 ```
 
 Now let's create a way for the user to view their own profile, and edit their profile. In your `urls.py`:
+
 ```python
 urlpatterns = [
     [...]
@@ -32,6 +36,7 @@ urlpatterns = [
 ```
 
 In your `views.py`:
+
 ```python
 from .forms import RegisterForm, LoginForm, ArticleForm, ProfileForm
 
@@ -57,6 +62,7 @@ def profile_edit(request):
 ```
 
 Also in your views, update the `register_view()` to be:
+
 ```python
 from .models import Article, Profile
 
@@ -76,6 +82,7 @@ def register_view(request):
 ```
 
 So your `register_view(...)` becomes:
+
 ```python
 def register_view(request):
     form = RegisterForm()
@@ -101,6 +108,7 @@ def register_view(request):
 This change is important because it'll automatically create a `Profile` object associated with the newly registered user. All your existing user accounts do not have a `Profile` object. You can create empty `Profile` objects in the admin site and associate them with `User` accounts.
 
 In your `forms.py`:
+
 ```python
 from .models import Article, Profile
 
@@ -111,6 +119,7 @@ class ProfileForm(forms.ModelForm):
 ```
 
 Create the two templates: `profile.html` and `profile_edit.html`. The way we're gonna style the `profile.html` template will be the same as the way we styled the `author_profile.html` template, with a button to `Edit` the profile:
+
 ```django
 {% extends "base.html" %}
 
@@ -160,11 +169,13 @@ Profile
 ```
 
 ##### `{% if user.profile.description %}`
+
 This page will display the user profile's `description` if he has written a description.
 
 We also changed the message to be displayed if there's no published articles.
 
 The `profile_edit.html` template styles will match the styles used for the draft edit page:
+
 ```django
 {% extends "base.html" %}
 
@@ -190,6 +201,7 @@ Profile Edit Page
 ```
 
 Now you can edit your profile and write a description. Now we need to display the description in other authors' profiles also, not just the logged in user's profile. This is done in the `author_profile.html` template. Edit the `card-body` div in your `author_profile.html` template to:
+
 ```django
 <div class="card-body">
     [...]
@@ -202,6 +214,7 @@ Now you can edit your profile and write a description. Now we need to display th
 ```
 
 So your `author_profile.html` should look like:
+
 ```django
 {% extends "base.html" %}
 
@@ -251,6 +264,7 @@ Profile
 ```
 
 Lastly, let's put a button in the navbar that takes you to the profile page. In your `base.html`, change the following:
+
 ```django
 {% if request.user.is_authenticated %}
     <li class="nav-item">
@@ -265,7 +279,9 @@ Lastly, let's put a button in the navbar that takes you to the profile page. In 
     </li>
 {% endif %}
 ```
+
 to:
+
 ```django
 {% if request.user.is_authenticated %}
     <li class="nav-item">
@@ -287,6 +303,7 @@ to:
 ```
 
 So your resulting `base.html` becomes:
+
 ```django
 {% load static %}
 

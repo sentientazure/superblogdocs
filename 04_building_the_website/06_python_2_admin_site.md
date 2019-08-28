@@ -1,16 +1,21 @@
 # Admin Site
+
 In your `admin.py` file, you should see the following:
+
 ```python
 from django.contrib import admin
 
 # Register your models here.
 ```
+
 Add the following:
+
 ```python
 from .models import Article
 
 admin.site.register(Article)
 ```
+
 On the second line we're importing the Article class we defined in our `models.py` file. Notice the `.` before `models` in that line. It means the `models` module in the same directory as this `admin.py` file.
 
 The last line allows us access to the `Article`s on our website from the admin site. Next we're gonna go to the admin site to see our `Article`s.
@@ -19,9 +24,11 @@ Since this is the admin site, only the administrator of the website has access t
 ![Admin login](https://i.imgur.com/wRF8e8O.png)
 
 Now let's create a user account that has access to the admin site. Now stop the server from running (`CTRL-C`) and run:
+
 ```bash
 (superblog_env)$ python manage.py createsuperuser
 ```
+
 This will ask you to enter a username, an optional email, and a password (and again to confirm the password). Those credentials you will use to login to the admin site. Once you've done that, login to the admin site and you should see the following page:
 ![Admin site](https://i.imgur.com/qDnxGBL.png)
 

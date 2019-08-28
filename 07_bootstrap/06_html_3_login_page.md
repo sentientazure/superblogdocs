@@ -1,6 +1,7 @@
 # Styling the Login Page!
 
 Currently, your `login.html` body block looks like this:
+
 ```django
 <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
@@ -16,6 +17,7 @@ Currently, your `login.html` body block looks like this:
 ```
 
 We're gonna replace all of that. We'll use the same body block as the `register.html`. We'll remove the email, first name, and last name fields. Remove the `<small>` element for the username field. Change the header text and form url from register to login. Your end result should be like:
+
 ```django
 {% block body %}
 <div class="card my-4">

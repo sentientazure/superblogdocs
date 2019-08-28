@@ -1,7 +1,9 @@
 # Login Error Messages
+
 Currently, if the user attempts to login and accidentally mistypes their password, they won't see a helpful message that tells them what went wrong and how to fix it. Usually in the internet, if you login with the wrong password you get a message like "Wrong username/password combination," let's put something like that on our website!
 
 Change your `login_view()` to:
+
 ```python
 def login_view(request):
     [...]
@@ -19,7 +21,9 @@ def login_view(request):
     }
     return render(request, 'login.html', context)
 ```
+
 It should look like this:
+
 ```python
 def login_view(request):
     form = LoginForm()
@@ -34,7 +38,7 @@ def login_view(request):
             if auth_user is not None:
                 login(request, auth_user)
                 return redirect('article-list')
-        
+
         error_message = "Invalid username/password combination. Please try again."
 
     context = {
@@ -44,9 +48,10 @@ def login_view(request):
     return render(request, "login.html", context)
 ```
 
-Be aware of indentations. In this code, if the form is *invalid* the variable `error_message` will contain the message "Invalid username/password combination. Please try again." Next, we display the message.
+Be aware of indentations. In this code, if the form is _invalid_ the variable `error_message` will contain the message "Invalid username/password combination. Please try again." Next, we display the message.
 
 In your `login.html`, above the submit button:
+
 ```django
 {% block body %}
 <div class="card my-4">

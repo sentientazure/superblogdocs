@@ -1,7 +1,9 @@
 # Article Create Page
-Let's now allow the *users* to create their own articles!
 
-We'll start by defining the *form* class for creating an `Article`. In your `forms.py`:
+Let's now allow the _users_ to create their own articles!
+
+We'll start by defining the _form_ class for creating an `Article`. In your `forms.py`:
+
 ```python
 from .models import Article
 
@@ -10,19 +12,24 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = ["title", "body", "author"]
 ```
+
 This is a `ModelForm` associated with the `Article` model.
 
 ##### `fields = ["title", "body", "author"]`
-In this line, we're including the  fields `title`, `body`, and `author` from the `Article` model. We're not adding the `created` field, because it should automatically be set when the article is created. The user shouldn't have to enter the current date and time every time they write a new article.
+
+In this line, we're including the fields `title`, `body`, and `author` from the `Article` model. We're not adding the `created` field, because it should automatically be set when the article is created. The user shouldn't have to enter the current date and time every time they write a new article.
 
 In your `urls.py`:
+
 ```python
 urlpatterns = [
     [...]
     path('articles/create/', views.article_create, name="article-create"),
 ]
 ```
+
 In your `views.py`:
+
 ```python
 from .forms import RegisterForm, LoginForm, ArticleForm
 
@@ -40,6 +47,7 @@ def article_create(request):
 ```
 
 Now let's add a button in the base template that takes us to the create page. In your `base.html` under the `Home` button add the `Write!` button:
+
 ```django
 <ul class="navbar-nav mr-auto">
     <li class="nav-item">
@@ -56,9 +64,11 @@ Now let's add a button in the base template that takes us to the create page. In
     {% endif %}
 </ul>
 ```
-Having the button *inside* the `{% if ... %}` means that only logged in users can write an article. Because the "Write!" button won't appear on the page if they're not logged in.
+
+Having the button _inside_ the `{% if ... %}` means that only logged in users can write an article. Because the "Write!" button won't appear on the page if they're not logged in.
 
 Create a new HTML file in your `templates/` folder, and call it `create.html`. The article create page will consist of a single form that has the title and the body of the article the user is creating. We're gonna style it the same way we styled the login and registration form pages:
+
 ```django
 {% extends "base.html" %}
 
@@ -96,6 +106,7 @@ If you write out an article in the create page and submit, you'll be taken to th
 ---
 
 By this point, your `urls.py` should look like this:
+
 ```python
 from django.contrib import admin
 from django.urls import path
@@ -113,6 +124,7 @@ urlpatterns = [
 ```
 
 Your `base.html` should be like:
+
 ```django
 {% load static %}
 

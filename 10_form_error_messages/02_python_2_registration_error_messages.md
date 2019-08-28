@@ -1,6 +1,7 @@
 # Registration Error Messages
 
 For the username field, replace the following in your `register.html`:
+
 ```django
 <div class="form-group">
     <label for="id_username">Username</label>
@@ -8,7 +9,9 @@ For the username field, replace the following in your `register.html`:
     <small id="usernameHelp" class="form-text text-muted">{{ form.username.help_text }}</small>
 </div>
 ```
+
 with:
+
 ```django
 <div class="form-group">
     <label for="id_username">Username</label>
@@ -23,6 +26,7 @@ with:
 ```
 
 We just added this:
+
 ```django
 {% if form.username.errors %}
     {% for error in form.username.errors %}
@@ -34,6 +38,7 @@ We just added this:
 What this does is it checks if the username field in the form has any errors. If so, it displays them in bold text. Let's do the same for the password and email fields!
 
 Your resulting `register.html` body block should look like this:
+
 ```django
 {% block body %}
 <div class="card my-4">

@@ -1,6 +1,7 @@
 # Styling the Detail Page!
 
 For the detail page, open up the `blog_post.html` template. From that template, we want the following code:
+
 ```django
 <div class="row">
 
@@ -31,6 +32,7 @@ For the detail page, open up the `blog_post.html` template. From that template, 
 ```
 
 As we did in the list page, we're gonna replace the static/example data with variables, and remove the "`<!-- Date/Time -->`" portion:
+
 ```django
 <div class="row">
     <!-- Post Content Column -->
@@ -52,6 +54,7 @@ As we did in the list page, we're gonna replace the static/example data with var
 ```
 
 Paste the above block of code to replace the following block of code in your `detail.html`:
+
 ```django
 <a href="{% url 'article-list' %}">
     <button>

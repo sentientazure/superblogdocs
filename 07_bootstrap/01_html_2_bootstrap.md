@@ -1,7 +1,9 @@
 # Bootstrap
+
 Let's start prettifying our little site. Bootstrap can help tremendously with that. In the starter repository that you've cloned at the beginning of this project, there's already Bootstrap files and styles in `articles/static/`. We'll be using a Bootstrap template that's already made and available online. Here are the links: [Blog Home](https://startbootstrap.com/templates/blog-home/) and [Blog Post](https://startbootstrap.com/templates/blog-post/). They're the same, but we need the `index.html` files that come from each download because we'll be using both of them to construct our blogging platform.
 
 If you open `blog_home.html` (which is the `index.html` you get when you download the Blog Home template), you'll find the following:
+
 ```django
 <head>
 
@@ -31,6 +33,7 @@ If you open `blog_home.html` (which is the `index.html` you get when you downloa
 Those are the links and scripts we need to put in our `base.html` template. However, we will change the `src`s and `href`s to use Django's `static` template tag.
 
 Your `base.html` should end up like this:
+
 ```django
 {% load static %}
 
