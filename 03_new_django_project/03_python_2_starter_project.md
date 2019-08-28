@@ -1,5 +1,3 @@
-# Cloning the starter project!
-
 So in the previous section we walked you through creating a new django project from scratch and running it. It's important to know how that works before moving forward. However, for the purposes of this project we're building, I've prepared for you a _starter repository_ you can clone. It's exactly the same as the project you've made in the previous section, but it has static files (CSS and JS) that we'll need for the coming chapters.
 
 So delete the project we just made, but keep the virtual environment.

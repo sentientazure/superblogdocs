@@ -1,5 +1,3 @@
-# Linux Setup
-
 ### Installing Python 3
 
 If you don't already have Python 3 installed, run the following commands to install it:

@@ -1,4 +1,26 @@
-# Hello World Page
+### `views.py`
+
+Views are Python functions that receive a web request, do whatever logic necessary, and return a web response. That response is usually an HTML file that displays the webpage for the user. We're about to write our first view!
+
+You should see the following already existing in the file:
+
+```python
+from django.shortcuts import render
+
+# Create your views here.
+
+```
+
+Let's add the following:
+
+```python
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Hello World!")
+```
+
+This is a view function that returns a web response with the text "Hello World!".
 
 Now, open up the `urls.py` file in your project folder. You should see the following already there by default:
 
@@ -18,7 +40,7 @@ urlpatterns = [
 ]
 ```
 
-The first line imports the entire `views` package from the `articles` app. The line with `path` that we added means that if we go to the URL `127.0.0.1:8000`, it will \*execute the view function called **index\***. Next we will create the view.
+The first line imports the entire `views` package from the `articles` app. The line with `path` that we added means that if we go to the URL `127.0.0.1:8000`, it will execute the view function called _index_. Next we will create the view.
 
 Your `urls.py` should look like this:
 
@@ -31,26 +53,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
 ]
-```
-
-### `views.py`
-
-You should see the following already existing in the file:
-
-```python
-from django.shortcuts import render
-
-# Create your views here.
-
-```
-
-Let's add the following:
-
-```python
-from django.http import HttpResponse
-
-def index(request):
-    return HttpResponse("Hello World!")
 ```
 
 Now if you go to `127.0.0.1:8000` you should see the following page:

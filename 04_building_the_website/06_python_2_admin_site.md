@@ -1,6 +1,4 @@
-# Admin Site
-
-In your `admin.py` file, you should see the following:
+We can use the built-in admin site that comes with Django to create `Article` objects. But the model won't be in the admin site automatically, so before we can do anything relating to our new model, we need to register the model to the admin site. In your `admin.py` file, you should see the following:
 
 ```python
 from django.contrib import admin
@@ -16,7 +14,7 @@ from .models import Article
 admin.site.register(Article)
 ```
 
-On the second line we're importing the Article class we defined in our `models.py` file. Notice the `.` before `models` in that line. It means the `models` module in the same directory as this `admin.py` file.
+On the second line we're importing the `Article` class we defined in our `models.py` file. Notice the `.` before `models` in that line. It means the `models` module in the same directory as this `admin.py` file.
 
 The last line allows us access to the `Article`s on our website from the admin site. Next we're gonna go to the admin site to see our `Article`s.
 

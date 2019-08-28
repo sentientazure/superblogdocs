@@ -1,5 +1,3 @@
-# Creating a Django Project
-
 ### Activating the virtual environment
 
 Before we do anything with the project, we should first _activate_ the virtual environment that we just created:
@@ -36,6 +34,16 @@ If you see in between parantheses `(` and `)` the name of the virtual environmen
 (superblog_env)$ pip install django==2.2
 ```
 
+The "`==2.2`" is how we specify the version of Django we're installing. Without specifying this, if we just say `pip install django`, it'll install the latest stable release of Django. But to make sure there's consistency, we're specifying Django verison 2.2.
+
+### A brief intro to Django
+
+This image illustrates Django's architecture known as [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller).
+
+![Django architecture](https://i.imgur.com/KzO9oIA.png)
+
+Part of Django's power is all the things that come straight out-of-the-box with it. It comes by default with an admin site that the administrator of the website can use to manage data, content, and users. This admin site is only accessible to the administrator of the website.
+
 ### Creating the Django project
 
 The following command comes built-in with Django. It creates a new Django project for us, which we will call "superblog":
@@ -62,11 +70,15 @@ Let's quickly explain what each of these files means:
 - `__init__.py`: This is an empty file that tells Python to treat this folder as a Python package.
 - `settings.py`: This file contains the (you guessed it) settings of our project.
 - `urls.py`: This file contains the URL paths that our website will handle. This'll make more sense when we get into it.
-- `wsgi.py`: This is a file that allows your project to be deployed.
+- `wsgi.py`: This is a file that allows your project to be deployed. Although we won't be getting into that this project, it's good to know for when you deploy your websites.
 
 ### Creating the Django app
 
-Django allows us to separate parts of our website into Django _apps_. All of the functionality of the website is in these apps. So let's start by creating one now!
+Django allows us to separate parts of our website into Django _apps_. All of the functionality of the website is in these apps. An example to explain these Django apps and why Django has these apps is in an e-commerce site. An e-commerce site usually has accounts, the products, the cart, and payment. Each of those large components of the website could be put in its own app. So anything and everything related to handling accounts, registration, password resets, account deletion would be handled within a single Django app. Anythiing related to the products, categories of products, rating systems, search, recommended products, and so on could be handled within a single Django app dedicated to that part of the website.
+
+Django apps are nothing magical though, they're just folders and files meant to keep your code organized. You could put the entire website, no matter how complex, into a single Django app. It would be a coder's nightmare, and fair reason for your fellow teammate coders to learn sorcery and curse you in your sleep for condemning them to such a fate. But technically it's possible.
+
+So let's start by creating one now!
 
 ```bash
 (superblog_env)$ cd superblog
@@ -96,12 +108,12 @@ superblog/
 
 Let's have a quick runthough of what each of these new files is:
 
-- `admin.py`: Django comes with an out-of-the-box ready website for the administrator. In this file, we can customize that website to our liking. You'll see what we can do with it later.
-- `apps.py`: This contains the configurations of this app.
-- `migrations/`: This folder contains the migrations files.
-- `models.py`: This file contains the models of the application.
-- `tests.py`: This file is for writing tests for this website.
-- `views.py`: This is where we'll write our views. You'll know what views are later on.
+- `admin.py`: In this file we can customize the admin site to our liking. ([read more](https://docs.djangoproject.com/en/2.2/ref/contrib/admin/))
+- `apps.py`: This contains the configurations of this app. We won't touch this file at all.
+- `migrations/`: This folder contains the migrations files. We won't need to touch this folder at all. ([read more](https://docs.djangoproject.com/en/2.2/topics/migrations/))
+- `models.py`: This file contains the models of the application. ([read more](https://docs.djangoproject.com/en/2.2/topics/db/models/))
+- `tests.py`: This file is for writing tests for this website. We won't touch this file at all.
+- `views.py`: This is where we'll write our views. You'll know what views are later on. ([read more](https://docs.djangoproject.com/en/2.2/topics/http/views/))
 
 First thing you must remember to do after creating a new Django app, is include it in the `INSTALLED_APPS` list in the `settings.py` file. Open the `settings.py` file in your favorite text editor or IDE. I'll be using [VS Code](https://code.visualstudio.com/download). I recommend [Sublime Text](https://www.sublimetext.com/3) if you're not familiar with text editors and IDEs in general. You'll see the following list in your `settings.py`:
 
@@ -121,7 +133,7 @@ Include the app we just made at the bottom of the list:
 ```python
 INSTALLED_APPS = [
     [...]
-    'articles'
+    'articles',
 ]
 ```
 
@@ -166,7 +178,7 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```
 
-If you see this, then the server is running and we can open it in the browser. Now, open your favorite web browser (we recommend Google Chrome or Safari because of their very useful developer tools), and go to the following URL:
+If you see this, then the server is running and we can open it in the browser. Now, open your favorite web browser (we recommend Google Chrome because of their very useful developer tools), and go to the following URL:
 
 ```bash
 http://127.0.0.1:8000/

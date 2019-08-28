@@ -1,5 +1,3 @@
-# Prerequisites
-
 Before starting this project, we're assuming you're familiar with the following:
 
 - Basic programming concepts. Including Object Oriented Programming.

@@ -1,5 +1,3 @@
-# Windows Setup
-
 To run the command line in Windows as administrator:
 
 1. Right Click on cmd.exe

@@ -1,5 +1,3 @@
-# List Page
-
 In your `views.py`, change the `index()` view function to the following:
 
 ```python

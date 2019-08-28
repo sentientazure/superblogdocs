@@ -1,5 +1,3 @@
-# Base File
-
 At this point, we have two HTML templates. One for the list page, another for the detail page. As our project grows larger and more complex, consistency across the pages becomes more and more important. Django gives us a brilliant solution to this issue of consistency. It's a _base_ template file where other template files inherit from it.
 
 Let's have our two template files inherit from a base file!

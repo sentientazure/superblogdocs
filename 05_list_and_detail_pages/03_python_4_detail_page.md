@@ -1,5 +1,3 @@
-# Detail Page
-
 This will be another page. Because of that, we need another `path()` in `urls.py`, another view in `views.py`, and another template in `templates/`.
 
 But before we jump into the code for this page, let's go back to the shell again and cover some more Queryset Basics...
@@ -59,9 +57,9 @@ Here's what I got:
 'What is Lorem Ipsum?'
 ```
 
-This means that the article with `id` 1 is the article with the title "What is Lorem Ipsum?"
+This means that the article with `id` 1 is the article with the title "What is Lorem Ipsum?" The `.get()` works by finding a single object that matches the parameter given to it. If it finds a match, it'll return that object. If it doesn't find a match, it'll crash and give you an error. For example, right now we have four articles with `id`s 1, 2, 3, and 4. If we write `Article.objects.get(id=1)` it'll give us the `Article` with `id` 1. If we write `Article.objects.get(id=5)`, which doesn't exist, it'll give you an error that says "Article matching query does not exist". ([Click here](https://stackoverflow.com/a/33119661/5292188) to see how to deal with this error if you ever get it.)
 
-This knowledge is important to know before going into this next step...
+All this knowledge is important to know before going into this next step...
 
 In your `urls.py` file, at the end of the `urlpatterns` list, add the following line:
 
@@ -101,7 +99,7 @@ def article_detail(request, article_id):
     return render(request, "detail.html", context)
 ```
 
-The `article_id` function parameter must match the name of the URL parameter `<int:article_id>`.
+The `article_id` function parameter must match the name of the URL parameter `<int:article_id>`. The way this'll work is when we go to the URL for the detail page and give it a certain article id, as you'll see in the example below, that article id will be passed to the view as the parameter `article_id`. Then the view is using that id to get the `Article` object with the matching id: `Article.objects.get(id=article_id)`. Then the view is sending that `Article` object to the detail template through the context, which renders all that `Article` object's data to the user.
 
 Create a template in `templates/` and call it "`detail.html`". Write the following inside:
 

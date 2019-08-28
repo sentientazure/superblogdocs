@@ -1,5 +1,3 @@
-# MacOS Setup
-
 ### Installing `Homebrew`
 
 If you don't already have Homebrew installed, run the following command to install it:

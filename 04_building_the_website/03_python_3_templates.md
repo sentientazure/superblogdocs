@@ -1,6 +1,6 @@
-# Templates
+In the starter project you cloned there's a folder called `templates/` that's been already created for you inside the `articles/` app folder. This folder had to be named "templates" exactly because that's where Django looks for HTML files. Even though we can write our HTML code in the view function's return, it won't be easy for us to write the entire HTML page, for every webpage on our website, inside the views alongside our Python code. It's much more organized and well-structured to contain our HTML code in their own HTML files, and use them from the views. Well, that's what we're doing here!
 
-In the starter project you cloned there's a folder called `templates/` that's been already created for you inside the `articles/` app folder. This folder had to be named "templates" exactly because that's where Django looks for HTML files. Create a file inside the `articles/templates/` folder called `index.html`. This is the HTML file that will be displayed on the page a little later. Let's write some HTML!
+Create a file inside the `articles/templates/` folder called `index.html`. This is the HTML file that will be displayed on the page a little later. Let's write some HTML!
 
 ### HTML
 
