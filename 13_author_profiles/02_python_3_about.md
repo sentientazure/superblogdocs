@@ -1,5 +1,3 @@
-# About
-
 It would be nice to know a little about who this author is. Let's create, in the author's profile page, a "Description", where they can write a little bit about themselves.
 
 For that to be possible, we need to store in the database the "description" of every author. So we need to create a model for it. In your `models.py`:
@@ -10,7 +8,9 @@ class Profile(models.Model):
     description = models.TextField(null=True, blank=True)
 ```
 
-The `user` field is a One To One field with the `User` model. This is because a user only has one profile and one "description". The `description` field is a `TextField`. We're making it optional so not every user has to have a description. We make it optional by setting `null=True`, and `blank=True`.
+The `user` field is a One To One field with the `User` model. This is because a user only has one profile, and a profile belongs only to a single user. Here we're only adding one field to the profile, the "`description`" field. Although feel free to add additional fields that you want your users' profiles to have. Like interests and contact information maybe.
+
+The `description` field is a `TextField`. We're making it optional so not every user has to have a description. We make it optional by setting `null=True`, and `blank=True`.
 
 `null=True` allows a `Profile` object in the database to have an empty `description` field. `blank=True` sets the `description` field as not required for forms.
 
@@ -42,8 +42,10 @@ from .forms import RegisterForm, LoginForm, ArticleForm, ProfileForm
 
 def profile(request):
     user = request.user
+    articles = Article.objects.filter(author=user)
     context = {
-        'user': user
+        'user': user,
+        'articles': articles
     }
     return render(request, "profile.html", context)
 

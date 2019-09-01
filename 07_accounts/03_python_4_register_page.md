@@ -1,5 +1,3 @@
-# Registration Page
-
 In the `register_view()` view in your `views.py`:
 
 ```python

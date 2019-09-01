@@ -1,5 +1,3 @@
-# Login Page
-
 In your `views.py`, replace:
 
 ```python
@@ -10,7 +8,7 @@ def login_view(request):
 with:
 
 ```python
-from .forms import RegisterForm, LoginForm
+from .forms import LoginForm
 
 def login_view(request):
     form = LoginForm()
@@ -20,7 +18,9 @@ def login_view(request):
     return render(request, "login.html", context)
 ```
 
-Don't forget to import the `LoginForm`. In your `login.html`:
+Here importing the `LoginForm` and creating an object out of the form class, then sending the object to the `login.html` template.
+
+In your `login.html`:
 
 ```django
 {% extends "base.html" %}
@@ -38,6 +38,8 @@ Login Page
 {% endblock %}
 ```
 
+Here we're rendering the login form along with a submit button. Once submitted, the URL it submits to is the login URL.
+
 Now, if you go to `127.0.0.1:8000/login`, you'll see the login form. If you fill it and submit it won't do anything. Just as we did with registration, we need to receive the form submission in the views.
 
 In your `views.py`, change your `login_view()` to:
@@ -45,7 +47,6 @@ In your `views.py`, change your `login_view()` to:
 ```python
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from .forms import RegisterForm, LoginForm
 
 def login_view(request):
     form = LoginForm()
@@ -66,7 +67,7 @@ def login_view(request):
     return render(request, "login.html", context)
 ```
 
-Most of this code is familiar to you, from the registration view. But there's a bit of code there that's new to you. Let's dissect this code!
+Here we added the code that responds to the `POST` request, which handles it by validating user's credentials, and logging them in if they're valid and correct. Most of this code is familiar to you, from the registration view. But there's a bit of code there that's new to you. Let's dissect this code!
 
 ##### `username = form.cleaned_data['username']`
 

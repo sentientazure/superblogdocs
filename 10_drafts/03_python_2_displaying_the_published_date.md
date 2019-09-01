@@ -1,5 +1,3 @@
-# Displaying The Published Date
-
 Let's display, in the detail page, the published date and time of an article.
 
 In your `detail.html`, replace the following:

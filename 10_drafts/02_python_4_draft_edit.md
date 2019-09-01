@@ -1,5 +1,3 @@
-# Draft Edit
-
 Let's create a page where the user can edit a draft!
 
 In your `urls.py`:
@@ -72,19 +70,21 @@ The way to put the existing value for the `<textarea>` is by putting the old val
 In your `draft_list.html` template, change the following:
 
 ```django
-<li>
-    {{ draft.title }}
-</li>
+<div class="card-body">
+    <h2 class="card-title">{{ draft.title }}</h2>
+</div>
 ```
 
 to:
 
 ```django
-<li>
-    <a href="{% url 'draft-edit' draft.id %}">
-        {{ draft.title }}
-    </a>
-</li>
+<div class="card-body">
+    <h2 class="card-title">
+        <a href="{% url 'draft-edit' draft.id %}">
+            {{ draft.title }}
+        </a>
+    </h2>
+</div>
 ```
 
 ##### `<a href="{% url 'draft-edit' draft.id %}">`

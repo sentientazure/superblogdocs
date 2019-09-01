@@ -1,5 +1,3 @@
-# Registration Error Messages
-
 For the username field, replace the following in your `register.html`:
 
 ```django

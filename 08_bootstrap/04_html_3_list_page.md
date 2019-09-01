@@ -1,44 +1,4 @@
-# Styling the List Page!
-
-For styling the list page, open up the `blog_home.html` template. In it, you'll find the following:
-
-```django
-<div class="row">
-    <!-- Blog Entries Column -->
-    <div class="col-md-8">
-        [...]
-    </div>
-</div>
-<!-- /.row -->
-```
-
-Copy those `<div>`s, but delete everything inside of the inner `<div>` except the following Page Heading:
-
-```django
-<h1 class="my-4">Page Heading
-    <small>Secondary Text</small>
-</h1>
-```
-
-and one of the blog posts:
-
-```django
-<!-- Blog Post -->
-<div class="card mb-4">
-    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-    <div class="card-body">
-        <h2 class="card-title">Post Title</h2>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-        <a href="#" class="btn btn-primary">Read More &rarr;</a>
-    </div>
-    <div class="card-footer text-muted">
-        Posted on January 1, 2017 by
-        <a href="#">Start Bootstrap</a>
-    </div>
-</div>
-```
-
-In your `list.html`, replace of the following:
+For styling the list page, we're gonna use blocks of code that we'll take from `blog_home.html`. In your `list.html`, replace of the following:
 
 ```django
 <ul>
@@ -80,6 +40,8 @@ with:
 </div>
 <!-- /.row -->
 ```
+
+You can find this code in `blog_home.html`. Look for the comments `<!-- Blog Entries Column -->` and `<!-- Blog Post -->`.
 
 Now if you refresh the list page, you'll see it displays a nice-looking post, sort of. But it's not really the list page we're after. That's largely because we're not looping and displaying the list of articles. Can you look at this new pretty block of code and guess where we'd have to put the for-loop? Which is the most appropriate place?
 

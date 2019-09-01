@@ -1,6 +1,4 @@
-# Article Create Page
-
-Let's now allow the _users_ to create their own articles!
+Let's now allow the _users_ to create their own articles! This is called a create view. Which is a page where the user fills out a form and submits it to create an object in the database.
 
 We'll start by defining the _form_ class for creating an `Article`. In your `forms.py`:
 
@@ -31,10 +29,14 @@ urlpatterns = [
 In your `views.py`:
 
 ```python
+from django.shortcuts import redirect
 from .forms import RegisterForm, LoginForm, ArticleForm
 
 def article_create(request):
     form = ArticleForm()
+    if request.user.is_anonymous:
+        return redirect("login")
+
     if request.method == "POST":
         form = ArticleForm(request.POST)
         if form.is_valid():
@@ -45,6 +47,8 @@ def article_create(request):
     }
     return render(request, 'create.html', context)
 ```
+
+This is the create view. You can see we added a new if-statement. `if request.user.is_anonymous:`. This if-statement will be `True` if the user is not logged in. In which case, we don't want logged in users to access this view, so we redirect them to the login page.
 
 Now let's add a button in the base template that takes us to the create page. In your `base.html` under the `Home` button add the `Write!` button:
 

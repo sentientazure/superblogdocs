@@ -1,5 +1,3 @@
-# Logout Page
-
 Let's create a button in the base template that appears if the user is logged in, and once clicked will log the user out. Let's start by adding the button, then work our way back to the view.
 
 In your `base.html`, below the "Login" button:
@@ -31,7 +29,7 @@ Here we're seeing two new things, let's dissect them!
 
 ##### `{% if request.user.is_authenticated %}`
 
-This is how you'd write an if-statement in Django's templates. `request` is always accessible in the template code, without needing to send it in the context. `request.user` always refers to the logged in user object. The `.is_authenticated` bit is a field in Django's built-in `User` model, it returns `True` if this user is logged in currently, and `False` otherwise.
+This is how you'd write an if-statement in Django's templates. `request` is always accessible in the template code, without needing to send it in the context. `request.user` always refers to the logged in user object. The `.is_authenticated` bit is an attribute in Django's built-in `User` model, it returns `True` if this user is logged in currently, and `False` otherwise.
 
 ##### `{% endif %}`
 
@@ -49,7 +47,7 @@ urlpatterns = [
 In your `views.py`:
 
 ```python
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import logout
 
 def logout_view(request):
     logout(request)
@@ -185,6 +183,10 @@ def register_view(request):
         "form": form,
     }
     return render(request, 'register.html', context)
+
+def logout_view(request):
+    logout(request)
+    return redirect("login")
 ```
 
 And your `base.html` should be like this:

@@ -1,5 +1,3 @@
-# Styling the Detail Page!
-
 For the detail page, open up the `blog_post.html` template. From that template, we want the following code:
 
 ```django
@@ -30,6 +28,8 @@ For the detail page, open up the `blog_post.html` template. From that template, 
     </div>
 </div>
 ```
+
+This code displays the detail page of a blog post. We're reusing it and replacing the post information with our article details.
 
 As we did in the list page, we're gonna replace the static/example data with variables, and remove the "`<!-- Date/Time -->`" portion:
 

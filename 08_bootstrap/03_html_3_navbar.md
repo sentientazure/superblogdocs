@@ -1,5 +1,3 @@
-# Navbar
-
 Let's put all those links in the base template, like for login, logout, register, and any other links we'll add in the future, in a nice-looking [navbar](https://getbootstrap.com/docs/4.3/components/navbar/).
 
 If you open `blog_home.html`, you'll find the following navbar:
@@ -194,8 +192,7 @@ def login_view(request):
 
     context = {
         'form': form,
-        "login_tab_status": "active",
-        "error_message": error_message,
+        "login_tab_status": "active"
     }
     return render(request, 'login.html', context)
 

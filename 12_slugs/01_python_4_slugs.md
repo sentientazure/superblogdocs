@@ -1,10 +1,14 @@
-# Slugs
+If you've noticed in most blog platforms and blogs in general, the URL in the detail page of an article doesn't show you a number that's the `id` of the article. It instead shows you, in the URL, usually the title of the article with hyphens in place of spaces and usually also lowercased. That's called a "_slug_". I know, weird name. Having slugs in the URL also optimizes your website for search engines like Google.
 
-If you've noticed in most blog platforms and blogs in general, the URL in the detail page of an article doesn't show you a number that's the `id` of the article. It instead shows you, in the URL, usually the title of the article with hyphens in place of spaces and usually also lowercased. That's called a "_slug_". I know, weird name. Having slugs in the URL also optimizes your website for search engines like Google. Let's create that for our website! Next, everywhere in our project where we're using the `id` to uniquely identify an article, we'll change it to use the `slug` to identify it instead.
+For example, let's assume we have an article called "Hello, world!" with `id` 1. The URL we'd usually have would be "`example.com/articles/1/`". If that URL is slugified (made into a slug), it would be `example.com/articles/hello-world/`. This is easier to read and understand, and helps search engines like Google understand what this page is about.
 
-For reasons discussed previous (see "_Automatically assigning article `author`_" section), we need to delete the database. To do that, delete the file `db.sqlite3` in your `superblog/` folder.
+Let's create that for our website! Next, everywhere in our project where we're using the `id` to uniquely identify an article, we'll change it to use the `slug` to identify it instead.
 
-This time around, for complicated reasons beyond the scope of this project, we need to also delete the _migrations files_. In your `articles/migrations/` folder you should see files with names starting with "000...". Probably "0001...", "0002...", and "0003..." if you've followed along with us step by step. Delete all those files inside the `articles/migrations/` folder, but make sure _not_ to delete the file called "\_\_init\_\_.py".
+For reasons discussed previously (see "_Automatically assigning article `author`_" section), we need to delete the database. To do that, delete the file `db.sqlite3` in your `superblog/` folder.
+
+This time around we need to also delete the _migrations files_. This is because we're adding a new field to the model, and existing objects of that model don't have a value for this new field. So when we migrate, Django will complain and ask us to set a default value or make it optional. So to avoid those options, we can simply delete the old migrations files.
+
+In your `articles/migrations/` folder you should see files with names starting with "000...". Probably "0001...", "0002...", and "0003..." if you've followed along with us step by step. Delete all those files inside the `articles/migrations/` folder, but make sure _not_ to delete the file called "\_\_init\_\_.py".
 
 Since we just deleted the database completely, let's create a superuser again since we might use it at any time:
 
@@ -117,8 +121,8 @@ Also in your `views.py`, change your `draft_edit(...)` view to:
 ```python
 from .utils import create_slug
 
-def draft_edit(request, article_id):
-    article = Article.objects.get(id=article_id)
+def draft_edit(request, article_slug):
+    article = Article.objects.get(id=article_slug)
     form = ArticleForm(instance=article)
     if request.method == "POST":
         form = ArticleForm(request.POST, instance=article)

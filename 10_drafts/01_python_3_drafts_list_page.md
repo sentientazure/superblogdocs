@@ -1,5 +1,3 @@
-# Drafts!
-
 Let's now allow our users to write an article and save it as a draft that only they can see, and they can still edit it until they decide to publish it. Once published a draft is no longer editable.
 
 The way the user will be able to save a draft, is by having a button on the article create form that says "Save as draft". Once clicked, that article will then be saved as a draft.
@@ -12,7 +10,6 @@ Change your model to the following:
 class Article(models.Model):
     title = models.CharField(max_length=125)
     body = models.TextField()
-    author = models.CharField(max_length=125)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     draft = models.BooleanField(default=False)
@@ -39,7 +36,7 @@ After changing the structure of the models, we must migrate:
 Let's create a button in the `create.html` page. Replace the following submit button:
 
 ```django
-<button type="submit" class="btn btn-primary">Save as draft</button>
+<button type="submit" class="btn btn-primary">Submit</button>
 ```
 
 with:
@@ -49,7 +46,7 @@ with:
 <button type="submit" class="btn btn-primary">Publish</button>
 ```
 
-You can see now we have _two_ submit buttons. Each of them has a different `value` attribute, and that attribute is the text that will be displayed on the button. You can go to the article create page to see. The old "submit" button now says "Publish". The new submit button says "Save as draft". They both also have a `name` attribute. We'll need those in the next step. The views. ([learn more about the `<input>` HTML tag here](https://www.w3schools.com/tags/tag_input.asp))
+You can see now we have _two_ submit buttons. The old "submit" button now says "Publish". The new submit button says "Save as draft". The new button has a `name` attribute. We'll need it in the next step. The views. ([learn more about the `<input>` HTML tag here](https://www.w3schools.com/tags/tag_input.asp))
 
 In your `article_create()` view, change the if-statement inside from:
 

@@ -1,5 +1,3 @@
-# Sharing Is Caring
-
 Let's put a button at the bottom of the article detail page for sharing this article. A basic sharing functionality, in this case, means to copy the URL of the article so that the user can just paste it elsewhere to share it. So we're gonna have a share button that copies the URL of this article to clipboard, as if the user selected the URL from the URL bar and copied it. This button will copy it for them.
 
 [Click here](https://superblog.codeunicorn.io/articles/hoomans/) for an example on how this button will work. In this article (written by the brilliant author _noug_), you can see the share button, once you click it it'll copy the URL of that webpage to your clipboard. Then you can just paste it anywhere.
@@ -30,7 +28,7 @@ In your `detail.html`, at the bottom of the body block:
 {% endblock %}
 ```
 
-It's all basic HTML and JavaScript. The `copyToClipboard()` function is what does the actual copying into clipboard. We have a button that says "Share Link" that if clicked will call this function to copy to clipboard. You can read the JavaScript code to try and understand how it works.
+The `copyToClipboard()` function is what does the actual copying into clipboard. It does this by adding a hidden element to the page and make its value be the string it receives (which is the URL of the page), selecting that text and copying it, then removes it from the page. We have a button that says "Share Link" that if clicked will call this function to copy to clipboard. You can read the JavaScript code to try and understand how it works.
 
 ##### `{{ request.build_absolute_uri }}`
 

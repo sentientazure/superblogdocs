@@ -1,5 +1,3 @@
-# Styling the Login Page!
-
 Currently, your `login.html` body block looks like this:
 
 ```django

@@ -1,5 +1,3 @@
-# URL Ordering
-
 The slugs we're now using in place of IDs introduced a problem. If you go to the create page at `127.0.0.1:8000/articles/create/`, you should see the following error:
 
 ![Article matching query does not exist.](https://i.imgur.com/ZSYtGbg.png)

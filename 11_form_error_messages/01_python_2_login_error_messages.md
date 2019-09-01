@@ -1,22 +1,17 @@
-# Login Error Messages
-
 Currently, if the user attempts to login and accidentally mistypes their password, they won't see a helpful message that tells them what went wrong and how to fix it. Usually in the internet, if you login with the wrong password you get a message like "Wrong username/password combination," let's put something like that on our website!
 
 Change your `login_view()` to:
 
 ```python
 def login_view(request):
-    [...]
+    form = LoginForm()
     error_message = ""
     if request.method == 'POST':
         [...]
-        if form.is_valid():
-            [...]
-
         error_message = "Invalid username/password combination. Please try again."
 
     context = {
-        [...]
+        'form': form,
         "error_message": error_message,
     }
     return render(request, 'login.html', context)
@@ -48,7 +43,9 @@ def login_view(request):
     return render(request, "login.html", context)
 ```
 
-Be aware of indentations. In this code, if the form is _invalid_ the variable `error_message` will contain the message "Invalid username/password combination. Please try again." Next, we display the message.
+Be aware of indentations.
+
+Here we added the variable `error_message` and set it to an empty string on top. Then, if the user submitted the form, and the submission is an invalid attempt to login, the `error_message` will contain the message "Invalid username/password combination. Please try again." Next, we display the message.
 
 In your `login.html`, above the submit button:
 

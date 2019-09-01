@@ -1,5 +1,3 @@
-# Draft Delete
-
 Let's give our users the option to delete a draft completely. Let's start with the button. In your `draft_edit.html` template, add the following delete button at the bottom of the `card-body` div:
 
 ```django

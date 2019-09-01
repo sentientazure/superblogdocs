@@ -1,5 +1,3 @@
-# Profile Page
-
 Let's build a page where you can see all the articles that an author has published. That'll be the author's profile page. Anywhere an author's name is displayed, we'll make it into a _link_ that if clicked will take the user to that author's profile page, displaying all the published articles written by that author.
 
 To start, let's write the URL, the view, then the template. In your `urls.py`:
@@ -10,6 +8,8 @@ urlpatterns = [
     path('profiles/<str:username>/', views.author_profile, name="author-profile"),
 ]
 ```
+
+You're familiar with URL parameters that use `id`s or `slug`s. Well this time, the URL parameter is a normal string. So to define it, instead of writing `<int:...>` we write `<str:...>`.
 
 Let's make a quick change in the models, change the following line:
 
@@ -29,7 +29,14 @@ class Article(models.Model):
     [...]
 ```
 
-No need to migrate this change because it doesn't change the database structure. `related_name` is something we can use to get the list of `Article` objects associated with a certain `User` object. You'll see how we'll use it next. (Read more about `related_name` [here](https://docs.djangoproject.com/en/2.2/ref/models/fields/#django.db.models.ForeignKey.related_name)).
+Since we modified our model, let's `makemigrations` and `migrate`:
+
+```bash
+(superblog_env)$ python manage.py makemigrations
+(superblog_env)$ python manage.py migrate
+```
+
+`related_name` is something we can use to get the list of `Article` objects associated with a certain `User` object. You'll see how we'll use it next. (Read more about `related_name` [here](https://docs.djangoproject.com/en/2.2/ref/models/fields/#django.db.models.ForeignKey.related_name)).
 
 In your `views.py`:
 

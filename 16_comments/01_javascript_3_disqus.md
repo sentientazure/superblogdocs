@@ -1,5 +1,3 @@
-# Disqus Comments
-
 A blog platform like this wouldn't be very interesting without comments. Instead of building it ourselves from scratch, we're gonna use an external API for it. [Disqus](https://disqus.com) is a great one!
 
 Follow these steps:

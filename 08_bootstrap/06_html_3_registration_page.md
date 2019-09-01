@@ -1,5 +1,3 @@
-# Styling the Registration Page!
-
 For styling the registration page, take a look at [Bootstrap's form example](https://getbootstrap.com/docs/4.3/components/forms/#overview). We'll be editing and using that in this section.
 
 For example, let's take this code:
