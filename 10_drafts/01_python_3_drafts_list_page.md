@@ -91,6 +91,10 @@ Here we're setting the `article`'s `draft` to `True`. This will only happen if t
 
 If the user clicks on the "Publish" button, we set the `article`'s `published` to the current date and time, using Django's timezone's `now()`.
 
+---
+
+### More about `form.data`
+
 Let me show you what `form.data` contains. (You can see for yourself by printing it in the view and creating a new article. If you just wanna see what it is without actually creating a new article, then comment out the code inside the `if form.is_valid()` statement and just add a print statement.)
 
 ```js
@@ -162,6 +166,10 @@ The `name` attribute is where that "draft" key comes from.
 
 Alright, so let's create a draft. You can see the draft is visible in the article list. It's not supposed to. If you go to that `Article` object in the admin site, you'll see it _is_ saved as a draft. You'll see it has a `draft` field, a checkbox, and it's checked. Which means its set to `True`.
 
+---
+
+### Article List Page
+
 Now we want the article list page to display articles that have been published only. In your `article_list()` view, replace the following line:
 
 ```python
@@ -177,6 +185,10 @@ articles_list = Article.objects.filter(draft=False)
 Now, instead of getting _`.all()`_ the `Article`s, we're `.filter()`-ing only the published articles. Those are the `Article`s with `draft` set to `False`.
 
 Now if you go to the article list page, you won't see the draft we just made.
+
+---
+
+### Drafts List Page
 
 But now... How can I, as the logged in author of a draft, see my drafts? How can I edit and then publish the draft I just made? Well... I, as the developer, have to build that feature. Let's!
 

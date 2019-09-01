@@ -1,8 +1,16 @@
 Since the user created an account and logged in before writing an article, we already know the name of the author. The user shouldn't be asked to enter their name every time they write a new article. So we can take care of that for them.
 
-Firstly, to avoid certain issues that will popup because we're altering the model structure, we'll delete all the existing articles. The new structure will conflict with the existing `Article` objects' structure in the database. That mismatch will cause Django to complain, because the structure of the models must reflect the structure of the database.
+---
+
+### Preparations
+
+Firstly, to avoid certain issues that will popup from adding a new attribute to the model, we'll delete all the existing articles. The new structure will have an attribute that the old/existing `Article`s don't. This mismatch will cause Django to complain, because it doesn't know what value to fill the new attribute for the old `Article`s.
 
 Deleting the existing articles is necessary because of the changes we're doing next. In the real world, when your website is in production and the data is very critical and important to keep and not delete on a whim, you'll learn ways to avoid purging your database as we're doing now. But for now, for the purposes of keeping you focused on what matters and getting the fundamentals across, and because our website is in development and we don't have any critical data, we're gonna delete all the (few) existing articles we've created so far. ([read more about migrations here](https://docs.djangoproject.com/en/2.2/topics/migrations/#more-advanced-migrations))
+
+---
+
+### Django Shell
 
 In the Terminal, run the shell:
 
@@ -29,6 +37,10 @@ You should see an output like:
 ```
 
 Now we can make the changes to the model. If we had attempted to make changes to the model before deleting existing articles, Django will complain and tell you that the existing articles have data that don't match the structure you're changing to. So it won't allow it.
+
+---
+
+### Article Author
 
 In the `Article` model we defined in our `models.py`, the `author` field is defined as:
 

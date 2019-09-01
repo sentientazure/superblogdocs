@@ -61,6 +61,10 @@ This means that the article with `id` 1 is the article with the title "What is L
 
 All this knowledge is important to know before going into this next step...
 
+---
+
+### Detail Page
+
 In your `urls.py` file, at the end of the `urlpatterns` list, add the following line:
 
 ```python

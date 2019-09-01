@@ -18,7 +18,7 @@ def login_view(request):
     return render(request, "login.html", context)
 ```
 
-Here importing the `LoginForm` and creating an object out of the form class, then sending the object to the `login.html` template.
+Here we're importing the `LoginForm` and creating an object out of the form class, then sending the object to the `login.html` template.
 
 In your `login.html`:
 

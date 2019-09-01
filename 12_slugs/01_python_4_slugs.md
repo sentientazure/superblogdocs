@@ -1,5 +1,9 @@
 If you've noticed in most blog platforms and blogs in general, the URL in the detail page of an article doesn't show you a number that's the `id` of the article. It instead shows you, in the URL, usually the title of the article with hyphens in place of spaces and usually also lowercased. That's called a "_slug_". I know, weird name. Having slugs in the URL also optimizes your website for search engines like Google.
 
+---
+
+### Slugs And Preparations
+
 For example, let's assume we have an article called "Hello, world!" with `id` 1. The URL we'd usually have would be "`example.com/articles/1/`". If that URL is slugified (made into a slug), it would be `example.com/articles/hello-world/`. This is easier to read and understand, and helps search engines like Google understand what this page is about.
 
 Let's create that for our website! Next, everywhere in our project where we're using the `id` to uniquely identify an article, we'll change it to use the `slug` to identify it instead.
@@ -18,6 +22,10 @@ Since we just deleted the database completely, let's create a superuser again si
 
 Now that that's out of the way, let's create _slugs_!
 
+---
+
+### Models
+
 In your `models.py`, add the following field to the `Article` model:
 
 ```python
@@ -34,6 +42,10 @@ Let's not forget to migrate the new model. In your Terminal:
 (superblog)$ python manage.py makemigrations
 (superblog)$ python manage.py migrate
 ```
+
+---
+
+### Slugification (The Act Of Slugging)
 
 Now, let's write the code to convert an article's title to a slug. Create a _new file_ called `utils.py` inside `articles/`, next to `models.py`, `views.py`, and `admin.py`:
 
@@ -72,9 +84,13 @@ def create_slug(instance, new_slug=None):
     return slug
 ```
 
-The logic behind this funtion is the following:
+The logic behind this function is the following:
 
 Let's say we have two articles both with the title "Hello World". Their slugs will both be "hello-world". What this function does if it's making a slug that already exists it will add "-1" to the end of it. If there's already a slug "hello-world-1", it will take the number at the end and add 1 to it. So the slug will be "hello-world-2". And so on. This way each article's slug is always unique and readable.
+
+---
+
+### Slugs
 
 In your `urls.py`, replace the following:
 

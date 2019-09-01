@@ -11,7 +11,9 @@ def register_view(request):
     return render(request, "register.html", context)
 ```
 
-Don't forget to import the `RegisterForm`. Next, in your `register.html` template:
+Here we're importing the `RegisterForm` class, creating an object out of it, and sending it to the `register.html` template.
+
+Next, in your `register.html` template:
 
 ```django
 {% extends "base.html" %}

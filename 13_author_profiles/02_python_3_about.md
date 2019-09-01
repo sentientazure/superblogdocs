@@ -24,6 +24,10 @@ from .models import Article, Profile
 admin.site.register(Profile)
 ```
 
+---
+
+### Profile Page and Profile Edit Page
+
 Now let's create a way for the user to view their own profile, and edit their profile. In your `urls.py`:
 
 ```python

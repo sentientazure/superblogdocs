@@ -1,5 +1,3 @@
-### Activating the virtual environment
-
 Before we do anything with the project, we should first _activate_ the virtual environment that we just created:
 
 ```bash
