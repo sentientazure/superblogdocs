@@ -1,5 +1,7 @@
 A blog platform like this wouldn't be very interesting without comments. Instead of building it ourselves from scratch, we're gonna use an external API for it. [Disqus](https://disqus.com) is a great one!
 
+This is the trello cards "_As a user I can write a comment on an article_," "_As a user, I can delete my comments_," and "_As a user, I can edit my comments._" Move them from Backlog to Doing.
+
 Follow these steps:
 
 1. Make an account and login to [Disqus](https://disqus.com).
@@ -61,3 +63,7 @@ Follow these steps:
     Replace `YOUR-URL-GOES-HERE` with the website name you entered when registering on Disqus. The code snippet you see on Disqus under the instructions video should have your website name in place of this.
 
 And that's that! If you go to the detail page, the comment section should appear.
+
+---
+
+Move the cards to Done, and commit changes to git.

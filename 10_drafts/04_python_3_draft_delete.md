@@ -1,4 +1,8 @@
-Let's give our users the option to delete a draft completely. Let's start with the button. In your `draft_edit.html` template, add the following delete button at the bottom of the `card-body` div:
+Let's give our users the option to delete a draft completely.
+
+This is the trello card "_As an author, I can delete a draft._" Move it from Backlog to Doing.
+
+Let's start with the button. In your `draft_edit.html` template, add the following delete button at the bottom of the `card-body` div:
 
 ```django
 {% block body %}
@@ -37,3 +41,7 @@ def draft_delete(request, article_id):
 ```
 
 In here, the first line gets the article that the user decided to delete. Second line makes sure that only the author can delete it, and only if it's a draft. Third line deletes it. Then redirects the user to the draft list page.
+
+---
+
+Move the card to Done, and commit changes to git.

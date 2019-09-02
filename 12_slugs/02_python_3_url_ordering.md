@@ -24,9 +24,6 @@ urlpatterns = [
     path('drafts/', views.draft_list, name="draft-list"),
     path('drafts/<slug:article_slug>/', views.draft_edit, name="draft-edit"),
     path('drafts/<slug:article_slug>/delete/', views.draft_delete, name="draft-delete"),
-    path('profile/', views.profile, name="profile"),
-    path('profile/edit/', views.profile_edit, name="profile-edit"),
-    path('profiles/<str:username>/', views.author_profile, name="author-profile"),
 ]
 ```
 
@@ -50,3 +47,7 @@ urlpatterns = [
 ```
 
 This way, if we're going to `/articles/create/`, it'll match with the `article_create()` view first. Which is what we want.
+
+---
+
+Commit changes to git.

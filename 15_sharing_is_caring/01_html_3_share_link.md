@@ -2,6 +2,8 @@ Let's put a button at the bottom of the article detail page for sharing this art
 
 [Click here](https://superblog.codeunicorn.io/articles/hoomans/) for an example on how this button will work. In this article (written by the brilliant author _noug_), you can see the share button, once you click it it'll copy the URL of that webpage to your clipboard. Then you can just paste it anywhere.
 
+This is the trello card "_As a user, I can share a post by sharing a link to it._" Move the card from Backlog to Done.
+
 In your `detail.html`, at the bottom of the body block:
 
 ```django
@@ -35,3 +37,7 @@ The `copyToClipboard()` function is what does the actual copying into clipboard.
 This will return the absolute URL of this current page. So if the article's title is "Hello World", this will return "http://127.0.0.1:8000/articles/hello-world/". Of course once deployed to a web server with a domain name, this URL will automatically be changed to "http://<YOUR_DOMAIN_NAME>.com/articles/hello-world/". For example: "http://example.com/articles/hello-world/".
 
 [Read more about `request.build_absolute_uri` here](https://docs.djangoproject.com/en/2.2/ref/request-response/#django.http.HttpRequest.build_absolute_uri)
+
+---
+
+Move the card to Done, and commit changes to git.

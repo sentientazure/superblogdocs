@@ -56,14 +56,13 @@ As we did in the list page, we're gonna replace the static/example data with var
 Paste the above block of code to replace the following block of code in your `detail.html`:
 
 ```django
-<a href="{% url 'article-list' %}">
-    <button>
-        Back
-    </button>
-</a>
 <p>{{ article.author }}</p>
 <p>{{ article.title }}</p>
 <p>{{ article.body }}</p>
 ```
 
 Booyaah! Now your detail page looks pretty nice, doesn't it?
+
+---
+
+Commit changes to git.

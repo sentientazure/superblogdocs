@@ -38,6 +38,7 @@ def login_view(request):
 
     context = {
         'form': form,
+        "login_tab_status": "active",
         "error_message": error_message,
     }
     return render(request, "login.html", context)
@@ -66,3 +67,7 @@ In your `login.html`, above the submit button:
 ```
 
 Add that new line under `{{ form.as_p }}`. Now if you try to login using the wrong password or a username that doesn't exist, it will display that message below the input fields.
+
+---
+
+Commit changes to git.

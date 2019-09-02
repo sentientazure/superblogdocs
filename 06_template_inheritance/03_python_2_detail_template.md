@@ -41,3 +41,9 @@ Detail Page
 ```
 
 And there you have it! Better structured template code for your website!
+
+---
+
+### Git
+
+This would be a good point to commit changes to git.

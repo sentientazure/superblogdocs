@@ -1,11 +1,51 @@
-In your `views.py`, replace:
+This page is the trello card "_As a user, I can login to my account._" So let's move this card from Backlog to Doing.
+
+---
+
+### Login Form
+
+The login page consists essentially of a form with username and password fields. In your `forms.py`:
 
 ```python
-def login_view(request):
-    return render(request, "login.html")
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True)
+    password = forms.CharField(required=True, widget=forms.PasswordInput())
 ```
 
-with:
+In Django, we can define our forms as Python classes that subclass Django's built-in `Form` class. Let's dissect this code!
+
+##### `class LoginForm(forms.Form):`
+
+Here we're defining a form that we will later use on our website, and we're calling this form "`LoginForm`". What makes this a form, not just a Python class, is that it subclasses Django's `Form` class.
+
+([read more about Django's Form](https://docs.djangoproject.com/en/2.2/topics/class-based-views/generic-editing/))
+
+##### `username = forms.CharField(required=True)`
+
+Here we're defining, as part of this form, a field called "`username`", and the type of data this form field will have is a string, hence the familiar `CharField` bit. We're also saying that the username field in this form is _required_, hence the `required=True` bit.
+
+##### `password = forms.CharField(required=True, widget=forms.PasswordInput())`
+
+This is the same as the `username`, but we're calling it `password` and it has the `PasswordInput()` widget. For a normal `Form` class (not a `ModelForm`), this is how you specify a widget for a field.
+
+---
+
+### URLs
+
+In your `urls.py`, let's define the URL path for the login page:
+
+```python
+urlpatterns = [
+    [...]
+    path('login/', views.login_view, name="login"),
+]
+```
+
+---
+
+### Login Page
+
+Let's start with the view. In your `views.py`:
 
 ```python
 from .forms import LoginForm
@@ -40,7 +80,7 @@ Login Page
 
 Here we're rendering the login form along with a submit button. Once submitted, the URL it submits to is the login URL.
 
-Now, if you go to `127.0.0.1:8000/login`, you'll see the login form. If you fill it and submit it won't do anything. Just as we did with registration, we need to receive the form submission in the views.
+Now, if you go to `127.0.0.1:8000/login`, you'll see the login form. If you fill it and submit it won't do anything. We need to receive the form submission in the views.
 
 In your `views.py`, change your `login_view()` to:
 
@@ -95,6 +135,10 @@ This line is familiar to you. It'll log the user in with the credentials they en
 
 This line will redirect the user to the article list page if they've successfully logged in.
 
+---
+
+### Base Template
+
 Let's add a button in the base template to take us to the login page. In your `base.html`, under the "Register" button:
 
 ```django
@@ -115,4 +159,10 @@ Let's add a button in the base template to take us to the login page. In your `b
 
 Now you can click on the login button and be taken to the login page.
 
-Next we're gonna build a button the user can use to logout!
+Next we're gonna build the registration page!
+
+---
+
+### Git & Trello
+
+Move the trello card from Doing to Done. Commit changes to git.

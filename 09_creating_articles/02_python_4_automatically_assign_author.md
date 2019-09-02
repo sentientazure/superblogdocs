@@ -171,3 +171,7 @@ def article_create(request):
 We added the line `article.author = request.user`. The bit that's new to you is the `request.user` part. When the user is logged in, `request.user` always contains the logged in `User` object. In this line, we're taking that `User` object and storing it as the new article's `author` attribute. ([read more about the `request` object here](https://docs.djangoproject.com/en/2.2/ref/request-response/))
 
 Now if you login and write a new article, you'll be able to do so completely without entering an author name. Then, in the list page after submitting the article, you can click on the article to see its detail page, and you'll see the name of the author displaying. It will display the `username` of your account.
+
+---
+
+Commit changes to git.

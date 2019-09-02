@@ -1,6 +1,10 @@
+This detail page is the Trello card "As a user, I can read a full article." So move this trello card from the Backlog to the Doing list.
+
 This will be another page. Because of that, we need another `path()` in `urls.py`, another view in `views.py`, and another template in `templates/`.
 
 But before we jump into the code for this page, let's go back to the shell again and cover some more Queryset Basics...
+
+---
 
 ### More Queryset Basics
 
@@ -87,7 +91,7 @@ from articles import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.article_list, name="article-list"),
+    path('articles/', views.article_list, name="article-list"),
     path('articles/<int:article_id>/', views.article_detail, name="article-detail"),
 ]
 ```
@@ -130,7 +134,6 @@ By this point, your `views.py` should look like this:
 
 ```python
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Article
 
 def article_list(request):
@@ -147,3 +150,9 @@ def article_detail(request, article_id):
     }
     return render(request, "detail.html", context)
 ```
+
+---
+
+### Git & Trello
+
+As you can guess, this is the point to create a commit and move the trello card to the Done list. Give the commit whatever message you think is appropriate.

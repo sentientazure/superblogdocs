@@ -71,7 +71,7 @@ Change the block of code that we just pasted into the list page to the following
           <h2 class="card-title"><a href="{% url 'article-detail' article.id %}">{{ article.title }}</a></h2>
         </div>
         <div class="card-footer text-muted">
-          Published on {{ article.published }} by {{ article.author.username }}
+          Published on {{ article.created }} by {{ article.author.username }}
         </div>
       </div>
     {% endfor %}
@@ -134,3 +134,7 @@ to:
 ```
 
 Now, refresh the list page and you'll see it looking much nicer!
+
+---
+
+Commit changes to git.

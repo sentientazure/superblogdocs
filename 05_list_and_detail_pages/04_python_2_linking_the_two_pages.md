@@ -27,3 +27,9 @@ Now, if you go to the list page at `127.0.0.1:8000`, the article titles should n
 Notice that whenever you click on an article title in the list page, the URL you're taken to will have a different number with each article. And they all take you to different pages. However, all those different pages have been programmed _only once_. The second URL we defined (`'articles/<int:article_id>/'`) is dynamic. The second view, the `article_detail()` view, is also dynamic. Meaning that they can display different pages depending on the `id` they receive.
 
 The next goal is to allow _users_ to create their own articles. But before we can do that, we need to allow users to register and login to their own accounts on our website.
+
+---
+
+### Git
+
+Don't forget to commit changes to git.

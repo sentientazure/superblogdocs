@@ -23,3 +23,7 @@ urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 ```
 
 That's it! Our Django site is now ready to host and server static files.
+
+---
+
+This is a good point to commit changes to git on the static files setup.

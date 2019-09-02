@@ -1,5 +1,7 @@
 Let's now allow the _users_ to create their own articles! This is called a create view. Which is a page where the user fills out a form and submits it to create an object in the database.
 
+This is the trello card "_As a user, I can write an article._" Move it from Backlog to Doing.
+
 We'll start by defining the _form_ class for creating an `Article`. In your `forms.py`:
 
 ```python
@@ -118,7 +120,7 @@ from articles import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.article_list, name="article-list"),
+    path('articles/', views.article_list, name="article-list"),
     path('articles/<int:article_id>/', views.article_detail, name="article-detail"),
     path('register/', views.register_view, name="register"),
     path('login/', views.login_view, name="login"),
@@ -200,3 +202,7 @@ Your `base.html` should be like:
 </body>
 </html>
 ```
+
+---
+
+Move the trello card to Done, and commit changes to git.

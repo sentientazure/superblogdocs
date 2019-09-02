@@ -86,3 +86,7 @@ Your resulting `register.html` body block should look like this:
 </div>
 {% endblock %}
 ```
+
+---
+
+Commit changes to git.

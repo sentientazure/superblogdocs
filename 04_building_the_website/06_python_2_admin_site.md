@@ -52,3 +52,14 @@ Click the "Save and add another" button in the bottom right to continue adding m
 Now if you click on one of them, you'll be taken to a page where you can see all of that article's details, and can edit it to your liking.
 
 ([read more about the Django admin site here](https://docs.djangoproject.com/en/2.2/ref/contrib/admin/))
+
+---
+
+### Git
+
+This is a good point to commit changes once more. Let's create a checkpoint here for adding the model and registering it to the admin site:
+
+```bash
+(superblog_env)$ git add .
+(superblog_env)$ git commit -m "Added Article model and registered it in the admin site."
+```

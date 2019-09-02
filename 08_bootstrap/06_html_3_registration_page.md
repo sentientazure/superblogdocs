@@ -107,3 +107,7 @@ Copy that, remove the text area and change the opening `<form>` tag to fit our n
 </div>
 {% endblock %}
 ```
+
+---
+
+Commit changes to git.

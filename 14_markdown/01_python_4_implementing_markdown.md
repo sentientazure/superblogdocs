@@ -4,7 +4,11 @@
 
 Markdown is a wonderful piece of technology that makes it very easy to write beautifully formatted content quite easily. Do you know how on websites like Reddit and apps like WhatsApp you can make your text bold by surrounding it in asterisks? For example, I could write **bold words** by typing them like this: \*bold words\*. Well, that's a simplified form of Markdown for you. The full Markdown we're implementing also allows you to write tables, headings, lists, images, and so much more!
 
-We'll be using [Python's Markdown](https://python-markdown.github.io) package to implement Markdown for our website. [Click here](https://daringfireball.net/projects/markdown/syntax) for Markdown syntax rules. To install Markdown:
+We'll be using [Python's Markdown](https://python-markdown.github.io) package to implement Markdown for our website. [Click here](https://daringfireball.net/projects/markdown/syntax) for Markdown syntax rules.
+
+This is the trello card "_As an author, I can write an article in Markdown._" Move it from Backlog to Doing.
+
+To install Markdown:
 
 ```bash
 (superblog_env)$ pip install markdown
@@ -161,3 +165,7 @@ Done! Bleach has been implemented.
 Now, restart the server and go back to that article again. You should see the script displayed as normal text, and the popup doesn't appear. There you go! Now if anyone attempts to do XSS on your website, they'll be gravely disappointed.
 
 That's it! Now if you write a new article using [Markdown Syntax](https://daringfireball.net/projects/markdown/syntax) and go to the detail page, you'll see it's beautifully styled and formatted!
+
+---
+
+Move the trello card to Done, and commit changes to git.

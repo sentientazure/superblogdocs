@@ -1,3 +1,5 @@
+Move the trello card "_As a user, I can logout of my account._" from Backlog to Doing.
+
 Let's create a button in the base template that appears if the user is logged in, and once clicked will log the user out. Let's start by adding the button, then work our way back to the view.
 
 In your `base.html`, below the "Login" button:
@@ -116,7 +118,7 @@ from articles import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.article_list, name="article-list"),
+    path('articles/', views.article_list, name="article-list"),
     path('articles/<int:article_id>/', views.article_detail, name="article-detail"),
     path('register/', views.register_view, name="register"),
     path('login/', views.login_view, name="login"),
@@ -128,7 +130,6 @@ Your `views.py` should be like this:
 
 ```python
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
 
 from .forms import RegisterForm, LoginForm
@@ -218,3 +219,9 @@ And your `base.html` should be like this:
 </body>
 </html>
 ```
+
+---
+
+### Git & Trello
+
+Move the trello card to the Done list, and commit changes to git.

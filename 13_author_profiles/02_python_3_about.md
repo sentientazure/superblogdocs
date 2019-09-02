@@ -107,6 +107,7 @@ def register_view(request):
 
     context = {
         "form": form,
+        "register_tab_status": "active"
     }
     return render(request, 'register.html', context)
 ```
@@ -391,3 +392,7 @@ So your resulting `base.html` becomes:
 </body>
 </html>
 ```
+
+---
+
+Move the trello card to Done, and commit changes to git.

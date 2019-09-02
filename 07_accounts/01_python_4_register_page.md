@@ -1,4 +1,58 @@
-In the `register_view()` view in your `views.py`:
+This page is the trello card "_As a user, I can register an account._" Move this card from Backlog to Doing.
+
+---
+
+### Registration Form
+
+The register page consists essentially of a form with username, password, first name, last name, and email fields. We're gonna use Django's class-based forms. They make it easier and simpler for us to use forms on our website. In your `articles/` folder, create a file called `forms.py`. It should be alongside your `models.py` and `views.py`.
+
+In your `forms.py`:
+
+```python
+from django import forms
+from django.contrib.auth.models import User
+
+class RegisterForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'email', 'first_name', 'last_name']
+
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
+```
+
+##### `class RegisterForm(forms.ModelForm):`
+
+Here we're defining a form and calling it "`RegisterForm`". It subclasses Django's `ModelForm`. This `ModelForm` is a _form_ that is associated with a _model_. Django gives us `ModelForm`, which is a very convenient way to quickly and easily create forms that map closely to a Django model, and allow us to create an object of the model out of this form.
+
+([read more about Django's ModelForm](https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/))
+
+##### `class Meta:`
+
+Since we're creating a `ModelForm`, we need to specify which model this form works with. The `Meta` class configures this.
+
+##### `model = User`
+
+This is a field in the `Meta` class. Here's where we define which model this `ModelForm` is associated with. We're importing Django's built-in `User` model, and using it here. ([read more about Django's built-in `User` model here](https://docs.djangoproject.com/en/2.2/ref/contrib/auth/#user-model))
+
+##### `fields = ['username', 'password', 'email', 'first_name', 'last_name']`
+
+In this form, we're associating the `RegisterForm` with a model, the `User` model. In this case, we only need to specify which fields from the model will be in the form, and Django's `ModelForm` knows the type of each field because they're defined, along with their types, in the User model.
+
+In the `fields` list, we only need to specify the names of the fields as strings in a list.
+
+##### `widgets = {'password': forms.PasswordInput(),}`
+
+When the user is typing the password in the form, we don't want the actual text they're typing to appear on the page. Usually when you login to any website, when you type the password you see •••••• appear instead of what you're actually typing. The way we can do that is by giving this form field a _widget_. Django's forms have plenty of widgets for various input methods. One of them is the `PasswordInput()` widget. As you can assume, specifying this widget to the password field, as we're doing here, will display those dots (••••) instead of what the user types. ([read more about Django forms' widgets here](https://docs.djangoproject.com/en/2.2/ref/forms/widgets/))
+
+[(Read more about Django forms here.)](https://docs.djangoproject.com/en/2.2/topics/forms/)
+
+---
+
+### Registration Page
+
+Let's build the registration page. In your `views.py`:
 
 ```python
 from .forms import RegisterForm
@@ -19,7 +73,7 @@ Next, in your `register.html` template:
 {% extends "base.html" %}
 
 {% block title %}
-Register
+Register Page
 {% endblock %}
 
 {% block body %}
@@ -181,3 +235,9 @@ Let's add a button in the base template that takes us to the registration page, 
 ```
 
 Now you can see a button that says "Register", clicking on it will take you to the registration page.
+
+---
+
+### Git & Trello
+
+Now we can move the trello card from Doing to Done, and commit our changes to git.

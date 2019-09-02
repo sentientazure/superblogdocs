@@ -1,3 +1,9 @@
+Since we're about to build the article list page in our app, this is the trello card "_As a user, I can see a list of all the articles_". Let's go ahead and drag that card from the `Backlog` list to the `Doing` list. Here's a gif of me doing it:
+
+![Drag&Drop trello card](https://i.imgur.com/JyK4P0x.gif)
+
+---
+
 In your `views.py`, change the `index()` view function to the following:
 
 ```python
@@ -117,3 +123,18 @@ def article_list(request):
 ```
 
 Lastly, change the template name from `index.html` to `list.html`, in the `templates/` folder.
+
+---
+
+### Git & Trello
+
+Let's create a checkpoint here for the list page:
+
+```bash
+(superblog_env)$ git add .
+(superblog_env)$ git commit -m "Article list page"
+```
+
+Now that we're done with the list page, we can move the trello card to the "Done" list:
+
+![Trello Card for list page to Done](https://i.imgur.com/7qS8S04.gif)

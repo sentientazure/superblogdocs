@@ -1,5 +1,7 @@
 Let's create a page where the user can edit a draft!
 
+This feature covers both trello cards "_As an author, I can edit a draft_" and "_As an author, I can publish a draft._" Move them from Backlog to Doing.
+
 In your `urls.py`:
 
 ```python
@@ -135,3 +137,7 @@ In this line, the function call `now()`, from Django's built-in `timezone` modul
 ##### `return redirect("article-detail", article_id=article.id)`
 
 In this line we're redirecting the user to the article detail page if they chose to publish their article. The `article-detail` URL receives a URL parameter called `article_id`. To pass it a value when using the `redirect(...)` function call, we send the URL parameter as an argument to the function call, as we did here.
+
+---
+
+Move the cards to Done, and commit changes to git.

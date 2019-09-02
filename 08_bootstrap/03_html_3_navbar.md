@@ -208,3 +208,7 @@ def register_view(request):
 ```
 
 The way this works is that if the user goes to the login page, the context will have "`login_tab_status`" with value "`active`". This way that nav link for the Login will have the class "`active`" while the other nav links will not.
+
+---
+
+Commit changes to git.

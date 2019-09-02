@@ -37,3 +37,7 @@ We're gonna replace all of that. We'll use the same body block as the `register.
 </div>
 {% endblock %}
 ```
+
+---
+
+Commit changes to git.

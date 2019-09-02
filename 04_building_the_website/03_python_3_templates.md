@@ -53,3 +53,14 @@ superblog/
         tests.py
         views.py
 ```
+
+---
+
+### Git
+
+This is a good point to commit changes. Let's create a checkpoint here for adding the template:
+
+```bash
+(superblog_env)$ git add .
+(superblog_env)$ git commit -m "Added templates"
+```

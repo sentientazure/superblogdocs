@@ -60,3 +60,7 @@ with:
 ```django
 {{ article.published|timesince }} ago
 ```
+
+---
+
+Commit changes to git.

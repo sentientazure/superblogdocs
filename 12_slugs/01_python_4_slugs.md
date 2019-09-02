@@ -14,12 +14,6 @@ This time around we need to also delete the _migrations files_. This is because 
 
 In your `articles/migrations/` folder you should see files with names starting with "000...". Probably "0001...", "0002...", and "0003..." if you've followed along with us step by step. Delete all those files inside the `articles/migrations/` folder, but make sure _not_ to delete the file called "\_\_init\_\_.py".
 
-Since we just deleted the database completely, let's create a superuser again since we might use it at any time:
-
-```bash
-(superblog)$ python manage.py createsuperuser
-```
-
 Now that that's out of the way, let's create _slugs_!
 
 ---
@@ -39,8 +33,14 @@ Django models come with a built-in ready out-of-the-box `SlugField`. Pretty hand
 Let's not forget to migrate the new model. In your Terminal:
 
 ```bash
-(superblog)$ python manage.py makemigrations
-(superblog)$ python manage.py migrate
+(superblog_env)$ python manage.py makemigrations
+(superblog_env)$ python manage.py migrate
+```
+
+Since we just deleted the database completely, let's create a superuser again since we might use it at any time:
+
+```bash
+(superblog_env)$ python manage.py createsuperuser
 ```
 
 ---
@@ -256,3 +256,7 @@ to:
 ```django
 <h2 class="card-title"><a href="{% url 'article-detail' article.slug %}">{{ article.title }}</a></h2>
 ```
+
+---
+
+Commit changes to git.

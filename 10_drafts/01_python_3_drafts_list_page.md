@@ -1,5 +1,7 @@
 Let's now allow our users to write an article and save it as a draft that only they can see, and they can still edit it until they decide to publish it. Once published a draft is no longer editable.
 
+This is the trello card "_As an author, I can write a draft._" Move it from Backlog to Doing.
+
 The way the user will be able to save a draft, is by having a button on the article create form that says "Save as draft". Once clicked, that article will then be saved as a draft.
 
 To be able to tell apart, in our database, an article saved as a draft and an article that is submitted and published, we will have a field in the `Article` model called `draft`. This field will be either true or false. If it's true, then we know this article is saved as a draft, if it's false then we know this is a published article.
@@ -292,3 +294,7 @@ Drafts List Page
 ```
 
 Instead of the small heading saying "All Articles", this says "Your Drafts". Instead of displaying publish date after "Published on", this displays the date that the draft was created after "Created on".
+
+---
+
+Move the trello card to Done, and commit changes to git.

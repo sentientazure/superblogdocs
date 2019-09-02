@@ -1,5 +1,7 @@
 Let's build a page where you can see all the articles that an author has published. That'll be the author's profile page. Anywhere an author's name is displayed, we'll make it into a _link_ that if clicked will take the user to that author's profile page, displaying all the published articles written by that author.
 
+This is the trello card "_As a user, I can view an author's profile page._" Move it from Backlog to Doing.
+
 To start, let's write the URL, the view, then the template. In your `urls.py`:
 
 ```python
@@ -143,3 +145,7 @@ Published on {{ article.published }} by <a href="{% url 'author-profile' article
 ```
 
 Now in the article detail page, the author name is a link to that author's profile page, displaying all the articles they published.
+
+---
+
+Commit changes to git.

@@ -63,3 +63,7 @@ Your `base.html` should end up like this:
 Don't forget the `{% load static %}` tag at the very top!
 
 Now, every template that extends the base template can use this Bootstrap template!
+
+---
+
+Commit changes to git.
